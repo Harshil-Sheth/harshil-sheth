@@ -1,501 +1,671 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Harshil Sheth - Senior Software Engineer specializing in microservices, AI integration, and full-stack development">
-    <meta name="keywords" content="Software Engineer, Microservices, React, Go, Node.js, AI, Full Stack Developer, Pune">
-    <meta name="author" content="Harshil Sheth">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Harshil Sheth - Senior Software Engineer specializing in microservices, AI integration, and full-stack development"
+    />
+    <meta
+      name="keywords"
+      content="Software Engineer, Microservices, React, Go, Node.js, AI, Full Stack Developer, Pune"
+    />
+    <meta name="author" content="Harshil Sheth" />
+
     <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="Harshil Sheth - Senior Software Engineer">
-    <meta property="og:description" content="Building high-scale distributed systems across cybersecurity, fintech, and edtech">
-    <meta property="og:type" content="website">
-    
+    <meta
+      property="og:title"
+      content="Harshil Sheth - Senior Software Engineer"
+    />
+    <meta
+      property="og:description"
+      content="Building high-scale distributed systems across cybersecurity, fintech, and edtech"
+    />
+    <meta property="og:type" content="website" />
+
     <title>Harshil Sheth - Senior Software Engineer</title>
-    
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <!-- Navigation -->
     <nav class="nav">
-        <div class="container nav-container">
-            <a href="#home" class="nav-logo">HS</a>
-            <ul class="nav-menu">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="#freelance" class="nav-link">Freelance</a></li>
-            </ul>
-            <div class="nav-right">
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">
-                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
-                <button class="nav-toggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+      <div class="container nav-container">
+        <a href="#home" class="nav-logo">HS</a>
+        <ul class="nav-menu">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="#freelance" class="nav-link">Freelance</a></li>
+        </ul>
+        <div class="nav-right">
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            aria-label="Toggle dark/light mode"
+          >
+            <svg
+              class="sun-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg
+              class="moon-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <button class="nav-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="container">
-            <h1 class="hero-title">Harshil Sheth</h1>
-            <h2 class="hero-subtitle">Senior Software Engineer</h2>
-            <p class="hero-description">
-                Building high-scale distributed systems across cybersecurity, fintech, and edtech.<br>
-                Expertise in microservices, AI integration, and full-stack development.
-            </p>
-            <div class="hero-cta">
-                <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                <button id="download-resume" class="btn btn-secondary">Download Resume</button>
-            </div>
-            <div class="hero-links">
-                <a href="https://github.com/Harshil-Sheth" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                </a>
-                <a href="https://linkedin.com/in/harshilsheth1888" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                </a>
-                <a href="mailto:harshilsheth181888@gmail.com" aria-label="Email">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                </a>
-            </div>
+      <div class="container">
+        <h1 class="hero-title">Harshil Sheth</h1>
+        <h2 class="hero-subtitle">Senior Software Engineer</h2>
+        <p class="hero-description">
+          Building high-scale distributed systems across cybersecurity, fintech,
+          and edtech.<br />
+          Expertise in microservices, AI integration, and full-stack
+          development.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary">Get In Touch</a>
+          <button id="download-resume" class="btn btn-secondary">
+            Download Resume
+          </button>
         </div>
+        <div class="hero-links">
+          <a
+            href="https://github.com/Harshil-Sheth"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://linkedin.com/in/harshilsheth1888"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+              />
+            </svg>
+          </a>
+          <a href="mailto:harshilsheth181888@gmail.com" aria-label="Email">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              ></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <p class="about-text">
-                    Senior Software Engineer with 4.5+ years of experience architecting and delivering production-grade distributed systems. 
-                    Currently at <strong>ConnectWise</strong>, I lead development on cybersecurity platforms serving 7,000+ MSPs worldwide, 
-                    building AI-powered SIEM insights and scalable microfrontend architectures.
-                </p>
-                <p class="about-text">
-                    I specialize in cloud-native microservices (Go, gRPC, Kafka), high-performance React applications (React 18, MUI 6), 
-                    and AI/ML integration (Azure OpenAI, AWS Bedrock). My work spans <strong>cybersecurity</strong> (MSP platforms, threat intelligence), 
-                    <strong>fintech</strong> (algorithmic trading, stock analysis), and <strong>edtech</strong> (real-time learning platforms).
-                </p>
-                <p class="about-text">
-                    Key achievements include architecting a 17-service microservices platform from scratch, improving engineering velocity by 65% 
-                    through AI-assisted development, and building WebSocket systems handling 10,000+ concurrent sessions. I'm passionate about 
-                    system design, performance optimization, and mentoring engineering teams.
-                </p>
-                
-                <div class="metrics">
-                    <div class="metric">
-                        <div class="metric-value" data-target="67000">0</div>
-                        <div class="metric-label">Users Served</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value" data-target="17">0</div>
-                        <div class="metric-label">Microservices Architected</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value" data-target="65">0</div>
-                        <div class="metric-label">% Velocity Increase</div>
-                    </div>
-                    <div class="metric">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+          <p class="about-text">
+            Senior Software Engineer with 4.5+ years of experience architecting
+            and delivering production-grade distributed systems. Currently at
+            <strong>ConnectWise</strong>, I lead development on cybersecurity
+            platforms serving 7,000+ MSPs worldwide, building AI-powered SIEM
+            insights and scalable microfrontend architectures.
+          </p>
+          <p class="about-text">
+            I specialize in cloud-native microservices (Go, gRPC, Kafka),
+            high-performance React applications (React 18, MUI 6), and AI/ML
+            integration (Azure OpenAI, AWS Bedrock). My work spans
+            <strong>cybersecurity</strong> (MSP platforms, threat intelligence),
+            <strong>fintech</strong> (algorithmic trading, stock analysis), and
+            <strong>edtech</strong> (real-time learning platforms).
+          </p>
+          <p class="about-text">
+            Key achievements include architecting a 17-service microservices
+            platform from scratch, improving engineering velocity by 65% through
+            AI-assisted development, and building WebSocket systems handling
+            10,000+ concurrent sessions. I'm passionate about system design,
+            performance optimization, and mentoring engineering teams.
+          </p>
+
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-value" data-target="67000">0</div>
+              <div class="metric-label">Users Served</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value" data-target="8">0</div>
+              <div class="metric-label">Projects Delivered</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value" data-target="22">0</div>
+              <div class="metric-label">Microservices Architected</div>
+            </div>
+            <!-- <div class="metric">
                         <div class="metric-value" data-target="7000">0</div>
                         <div class="metric-label">MSPs Served</div>
-                    </div>
-                </div>
-            </div>
+                    </div> -->
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Experience Section -->
     <section id="experience" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline">
-                <!-- ConnectWise -->
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3 class="timeline-title">Senior Software Engineer</h3>
-                            <span class="timeline-period">Nov 2023 - Present</span>
-                        </div>
-                        <h4 class="timeline-company">ConnectWise</h4>
-                        <p class="timeline-location">Pune, Maharashtra</p>
-                        <ul class="timeline-achievements">
-                            <li>Engineered scalable microfrontend architecture serving 7,000+ MSPs for security monitoring</li>
-                            <li>Led React 18 & MUI 6 migration, delivered 55+ configurable widgets across 7 security domains</li>
-                            <li>Spearheaded migration of 7 Go microservices, reducing delivery time from 97 to 34 days (65% improvement)</li>
-                            <li>Built AI-powered SIEM insights engine using FastAPI, Azure OpenAI, and AWS Bedrock</li>
-                            <li>Developed high-throughput PDF reporting service delivering 1,000+ daily reports</li>
-                        </ul>
-                        <div class="timeline-tech">
-                            <span class="tech-tag">React 18</span>
-                            <span class="tech-tag">Go</span>
-                            <span class="tech-tag">FastAPI</span>
-                            <span class="tech-tag">Azure OpenAI</span>
-                            <span class="tech-tag">Docker</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- LTIMindtree -->
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3 class="timeline-title">Software Engineer</h3>
-                            <span class="timeline-period">Aug 2021 - Nov 2023</span>
-                        </div>
-                        <h4 class="timeline-company">LTIMindtree</h4>
-                        <p class="timeline-location">Pune, Maharashtra</p>
-                        <ul class="timeline-achievements">
-                            <li>Re-architected Shotclasses microlearning platform serving 60,000+ active users</li>
-                            <li>Reduced page load time by 30% through Webpack optimization and code-splitting</li>
-                            <li>Built WebSocket-based quiz system supporting 10,000+ concurrent sessions</li>
-                            <li>Implemented Node.js REST APIs with PostgreSQL for course management and analytics</li>
-                        </ul>
-                        <div class="timeline-tech">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">PostgreSQL</span>
-                            <span class="tech-tag">WebSocket</span>
-                            <span class="tech-tag">Redis</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Education -->
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3 class="timeline-title">B.E. Computer Engineering</h3>
-                            <span class="timeline-period">Aug 2017 - May 2021</span>
-                        </div>
-                        <h4 class="timeline-company">Silver Oak College of Engineering</h4>
-                        <p class="timeline-location">Ahmedabad, Gujarat</p>
-                        <p class="timeline-description">CGPA: 9.1/10 (First Class with Distinction)</p>
-                    </div>
-                </div>
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline">
+          <!-- ConnectWise -->
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="timeline-title">Senior Software Engineer</h3>
+                <span class="timeline-period">Nov 2023 - Present</span>
+              </div>
+              <h4 class="timeline-company">ConnectWise</h4>
+              <p class="timeline-location">Pune, Maharashtra</p>
+              <ul class="timeline-achievements">
+                <li>
+                  Engineered scalable microfrontend architecture serving 7,000+
+                  MSPs for security monitoring
+                </li>
+                <li>
+                  Led React 18 & MUI 6 migration, delivered 55+ configurable
+                  widgets across 7 security domains
+                </li>
+                <li>
+                  Spearheaded migration of 7 Go microservices, reducing delivery
+                  time from 97 to 34 days (65% improvement)
+                </li>
+                <li>
+                  Built AI-powered SIEM insights engine using FastAPI, Azure
+                  OpenAI, and AWS Bedrock
+                </li>
+                <li>
+                  Developed high-throughput PDF reporting service delivering
+                  1,000+ daily reports
+                </li>
+              </ul>
+              <div class="timeline-tech">
+                <span class="tech-tag">React 18</span>
+                <span class="tech-tag">Go</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">Azure OpenAI</span>
+                <span class="tech-tag">Docker</span>
+              </div>
             </div>
+          </div>
+
+          <!-- LTIMindtree -->
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="timeline-title">Software Engineer</h3>
+                <span class="timeline-period">Aug 2021 - Nov 2023</span>
+              </div>
+              <h4 class="timeline-company">LTIMindtree</h4>
+              <p class="timeline-location">Pune, Maharashtra</p>
+              <ul class="timeline-achievements">
+                <li>
+                  Re-architected Shotclasses microlearning platform serving
+                  60,000+ active users
+                </li>
+                <li>
+                  Reduced page load time by 30% through Webpack optimization and
+                  code-splitting
+                </li>
+                <li>
+                  Built WebSocket-based quiz system supporting 10,000+
+                  concurrent sessions
+                </li>
+                <li>
+                  Implemented Node.js REST APIs with PostgreSQL for course
+                  management and analytics
+                </li>
+              </ul>
+              <div class="timeline-tech">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">WebSocket</span>
+                <span class="tech-tag">Redis</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education -->
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="timeline-title">B.E. Computer Engineering</h3>
+                <span class="timeline-period">Aug 2017 - May 2021</span>
+              </div>
+              <h4 class="timeline-company">
+                Silver Oak College of Engineering
+              </h4>
+              <p class="timeline-location">Ahmedabad, Gujarat</p>
+              <p class="timeline-description">
+                CGPA: 9.1/10 (First Class with Distinction)
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="section">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                <!-- Project 1: ConnectWise ASIO -->
-                <div class="project-card">
-                    <h3 class="project-title">ConnectWise ASIO</h3>
-                    <p class="project-category">Enterprise Cybersecurity Platform</p>
-                    <p class="project-description">
-                        Shell-module UI architecture serving 7,000+ MSPs with AI SIEM insights engine, 
-                        55+ configurable widgets across 7 security domains, and real-time threat monitoring.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React 18</span>
-                        <span class="tech-tag">Go</span>
-                        <span class="tech-tag">FastAPI</span>
-                        <span class="tech-tag">Azure OpenAI</span>
-                        <span class="tech-tag">AWS</span>
-                    </div>
-                    <div class="project-highlights">
-                        <div class="highlight">7,000+ MSPs</div>
-                        <div class="highlight">55+ Widgets</div>
-                        <div class="highlight">AI-Powered</div>
-                    </div>
-                </div>
-
-                <!-- Project 2: HS Analytics -->
-                <div class="project-card">
-                    <h3 class="project-title">HS Analytics</h3>
-                    <p class="project-category">Stock Market Platform</p>
-                    <p class="project-description">
-                        17-service microservices architecture with CAN SLIM methodology, 11 guru investment strategies, 
-                        live broker trading integration, and ML-based market signals.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Go</span>
-                        <span class="tech-tag">gRPC</span>
-                        <span class="tech-tag">Kafka</span>
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">XGBoost</span>
-                    </div>
-                    <div class="project-highlights">
-                        <div class="highlight">17 Services</div>
-                        <div class="highlight">11 Strategies</div>
-                        <div class="highlight">Live Trading</div>
-                    </div>
-                </div>
-
-                <!-- Project 3: Shotclasses -->
-                <div class="project-card">
-                    <h3 class="project-title">Shotclasses</h3>
-                    <p class="project-category">Microlearning Platform</p>
-                    <p class="project-description">
-                        Platform serving 60,000+ active users with real-time WebSocket quiz system, 
-                        10,000+ concurrent sessions, and 30% page load improvement.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                        <span class="tech-tag">WebSocket</span>
-                        <span class="tech-tag">Redis</span>
-                    </div>
-                    <div class="project-highlights">
-                        <div class="highlight">60K+ Users</div>
-                        <div class="highlight">10K Sessions</div>
-                        <div class="highlight">30% Faster</div>
-                    </div>
-                </div>
+      <div class="container">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+          <!-- Project 1: ConnectWise ASIO -->
+          <div class="project-card">
+            <h3 class="project-title">ConnectWise ASIO</h3>
+            <p class="project-category">Enterprise Cybersecurity Platform</p>
+            <p class="project-description">
+              Shell-module UI architecture serving 7,000+ MSPs with AI SIEM
+              insights engine, 55+ configurable widgets across 7 security
+              domains, and real-time threat monitoring.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">React 18</span>
+              <span class="tech-tag">Go</span>
+              <span class="tech-tag">FastAPI</span>
+              <span class="tech-tag">Azure OpenAI</span>
+              <span class="tech-tag">AWS</span>
             </div>
+            <div class="project-highlights">
+              <div class="highlight">7,000+ MSPs</div>
+              <div class="highlight">55+ Widgets</div>
+              <div class="highlight">AI-Powered</div>
+            </div>
+          </div>
+
+          <!-- Project 2: HS Analytics -->
+          <div class="project-card">
+            <h3 class="project-title">HS Analytics</h3>
+            <p class="project-category">Stock Market Platform</p>
+            <p class="project-description">
+              17-service microservices architecture with CAN SLIM methodology,
+              11 guru investment strategies, live broker trading integration,
+              and ML-based market signals.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">Go</span>
+              <span class="tech-tag">gRPC</span>
+              <span class="tech-tag">Kafka</span>
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">XGBoost</span>
+            </div>
+            <div class="project-highlights">
+              <div class="highlight">17 Services</div>
+              <div class="highlight">11 Strategies</div>
+              <div class="highlight">Live Trading</div>
+            </div>
+          </div>
+
+          <!-- Project 3: Shotclasses -->
+          <div class="project-card">
+            <h3 class="project-title">Shotclasses</h3>
+            <p class="project-category">Microlearning Platform</p>
+            <p class="project-description">
+              Platform serving 60,000+ active users with real-time WebSocket
+              quiz system, 10,000+ concurrent sessions, and 30% page load
+              improvement.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">WebSocket</span>
+              <span class="tech-tag">Redis</span>
+            </div>
+            <div class="project-highlights">
+              <div class="highlight">60K+ Users</div>
+              <div class="highlight">10K Sessions</div>
+              <div class="highlight">30% Faster</div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Skills Section -->
     <section id="skills" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3 class="skill-category-title">Languages</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">TypeScript</span>
-                        <span class="skill-tag">Go</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">SQL</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3 class="skill-category-title">Frontend</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">React 18</span>
-                        <span class="skill-tag">Redux Toolkit</span>
-                        <span class="skill-tag">Material UI</span>
-                        <span class="skill-tag">Highcharts</span>
-                        <span class="skill-tag">Webpack</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3 class="skill-category-title">Backend</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">FastAPI</span>
-                        <span class="skill-tag">gRPC</span>
-                        <span class="skill-tag">GraphQL</span>
-                        <span class="skill-tag">WebSocket</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3 class="skill-category-title">Databases</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">Redis</span>
-                        <span class="skill-tag">Kafka</span>
-                        <span class="skill-tag">TimescaleDB</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3 class="skill-category-title">Cloud & DevOps</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">GitLab CI</span>
-                        <span class="skill-tag">Prometheus</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3 class="skill-category-title">AI & ML</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Azure OpenAI</span>
-                        <span class="skill-tag">AWS Bedrock</span>
-                        <span class="skill-tag">XGBoost</span>
-                        <span class="skill-tag">scikit-learn</span>
-                        <span class="skill-tag">pandas</span>
-                    </div>
-                </div>
+      <div class="container">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3 class="skill-category-title">Languages</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">Go</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">SQL</span>
             </div>
+          </div>
+
+          <div class="skill-category">
+            <h3 class="skill-category-title">Frontend</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">React 18</span>
+              <span class="skill-tag">Redux Toolkit</span>
+              <span class="skill-tag">Material UI</span>
+              <span class="skill-tag">Highcharts</span>
+              <span class="skill-tag">Webpack</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3 class="skill-category-title">Backend</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">FastAPI</span>
+              <span class="skill-tag">gRPC</span>
+              <span class="skill-tag">GraphQL</span>
+              <span class="skill-tag">WebSocket</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3 class="skill-category-title">Databases</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">PostgreSQL</span>
+              <span class="skill-tag">MongoDB</span>
+              <span class="skill-tag">Redis</span>
+              <span class="skill-tag">Kafka</span>
+              <span class="skill-tag">TimescaleDB</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3 class="skill-category-title">Cloud & DevOps</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">AWS</span>
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">Kubernetes</span>
+              <span class="skill-tag">GitLab CI</span>
+              <span class="skill-tag">Prometheus</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3 class="skill-category-title">AI & ML</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Azure OpenAI</span>
+              <span class="skill-tag">AWS Bedrock</span>
+              <span class="skill-tag">XGBoost</span>
+              <span class="skill-tag">scikit-learn</span>
+              <span class="skill-tag">pandas</span>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="section">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <p class="contact-text">
-                        I'm currently open to new opportunities and interesting projects. 
-                        Whether you have a question or just want to say hi, feel free to reach out!
-                    </p>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
-                            <a href="mailto:harshilsheth181888@gmail.com">harshilsheth181888@gmail.com</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                            </svg>
-                            <span>+91-6354529244</span>
-                        </div>
-                        <div class="contact-item">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            <span>Pune, Maharashtra, India</span>
-                        </div>
-                    </div>
-                </div>
-
-                <form id="contact-form" class="contact-form">
-                    <div class="form-group">
-                        <label for="contact-name">Name</label>
-                        <input type="text" id="contact-name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-email">Email</label>
-                        <input type="email" id="contact-email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-subject">Subject</label>
-                        <input type="text" id="contact-subject" name="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-message">Message</label>
-                        <textarea id="contact-message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                    <div id="contact-status" class="form-status"></div>
-                </form>
+      <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-content">
+          <div class="contact-info">
+            <p class="contact-text">
+              I'm currently open to new opportunities and interesting projects.
+              Whether you have a question or just want to say hi, feel free to
+              reach out!
+            </p>
+            <div class="contact-details">
+              <div class="contact-item">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  ></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <a href="mailto:harshilsheth181888@gmail.com"
+                  >harshilsheth181888@gmail.com</a
+                >
+              </div>
+              <div class="contact-item">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                  ></path>
+                </svg>
+                <span>+91-6354529244</span>
+              </div>
+              <div class="contact-item">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                  ></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>Pune, Maharashtra, India</span>
+              </div>
             </div>
+          </div>
+
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <label for="contact-name">Name</label>
+              <input type="text" id="contact-name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input type="email" id="contact-email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-subject">Subject</label>
+              <input type="text" id="contact-subject" name="subject" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message</label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <div id="contact-status" class="form-status"></div>
+          </form>
         </div>
+      </div>
     </section>
 
     <!-- Freelance Section -->
     <section id="freelance" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">Freelance Work</h2>
-            <div class="freelance-content">
-                <p class="freelance-intro">
-                    Available for select freelance projects. I specialize in building scalable web applications, 
-                    microservices architectures, and AI-powered solutions.
-                </p>
-                
-                <div class="freelance-services">
-                    <div class="service-item">
-                        <h3>Full-Stack Development</h3>
-                        <p>End-to-end web application development using React, Node.js, and modern frameworks</p>
-                    </div>
-                    <div class="service-item">
-                        <h3>Microservices Architecture</h3>
-                        <p>Design and implementation of scalable microservices using Go, gRPC, and Kafka</p>
-                    </div>
-                    <div class="service-item">
-                        <h3>AI Integration</h3>
-                        <p>Integration of AI/ML features using Azure OpenAI, AWS Bedrock, and custom models</p>
-                    </div>
-                    <div class="service-item">
-                        <h3>Performance Optimization</h3>
-                        <p>Code optimization, profiling, and scaling for high-traffic applications</p>
-                    </div>
-                </div>
+      <div class="container">
+        <h2 class="section-title">Freelance Work</h2>
+        <div class="freelance-content">
+          <p class="freelance-intro">
+            Available for select freelance projects. I specialize in building
+            scalable web applications, microservices architectures, and
+            AI-powered solutions.
+          </p>
 
-                <form id="freelance-form" class="freelance-form">
-                    <h3 class="form-title">Project Inquiry</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="freelance-name">Name</label>
-                            <input type="text" id="freelance-name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="freelance-email">Email</label>
-                            <input type="email" id="freelance-email" name="email" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="freelance-company">Company</label>
-                            <input type="text" id="freelance-company" name="company">
-                        </div>
-                        <div class="form-group">
-                            <label for="freelance-budget">Budget Range</label>
-                            <select id="freelance-budget" name="budget" required>
-                                <option value="">Select budget range</option>
-                                <option value="< $5,000">< $5,000</option>
-                                <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                                <option value="$10,000 - $25,000">$10,000 - $25,000</option>
-                                <option value="$25,000+">$25,000+</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="freelance-project">Project Description</label>
-                        <textarea id="freelance-project" name="projectDescription" rows="5" required 
-                                  placeholder="Describe your project, timeline, and requirements..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit Inquiry</button>
-                    <div id="freelance-status" class="form-status"></div>
-                </form>
+          <div class="freelance-services">
+            <div class="service-item">
+              <h3>Full-Stack Development</h3>
+              <p>
+                End-to-end web application development using React, Node.js, and
+                modern frameworks
+              </p>
             </div>
+            <div class="service-item">
+              <h3>Microservices Architecture</h3>
+              <p>
+                Design and implementation of scalable microservices using Go,
+                gRPC, and Kafka
+              </p>
+            </div>
+            <div class="service-item">
+              <h3>AI Integration</h3>
+              <p>
+                Integration of AI/ML features using Azure OpenAI, AWS Bedrock,
+                and custom models
+              </p>
+            </div>
+            <div class="service-item">
+              <h3>Performance Optimization</h3>
+              <p>
+                Code optimization, profiling, and scaling for high-traffic
+                applications
+              </p>
+            </div>
+          </div>
+
+          <form id="freelance-form" class="freelance-form">
+            <h3 class="form-title">Project Inquiry</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="freelance-name">Name</label>
+                <input type="text" id="freelance-name" name="name" required />
+              </div>
+              <div class="form-group">
+                <label for="freelance-email">Email</label>
+                <input
+                  type="email"
+                  id="freelance-email"
+                  name="email"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="freelance-company">Company</label>
+                <input type="text" id="freelance-company" name="company" />
+              </div>
+              <div class="form-group">
+                <label for="freelance-budget">Budget Range</label>
+                <select id="freelance-budget" name="budget" required>
+                  <option value="">Select budget range</option>
+                  <option value="< $5,000">< $5,000</option>
+                  <option value="$5,000 - $10,000">$5,000 - $10,000</option>
+                  <option value="$10,000 - $25,000">$10,000 - $25,000</option>
+                  <option value="$25,000+">$25,000+</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="freelance-project">Project Description</label>
+              <textarea
+                id="freelance-project"
+                name="projectDescription"
+                rows="5"
+                required
+                placeholder="Describe your project, timeline, and requirements..."
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Submit Inquiry
+            </button>
+            <div id="freelance-status" class="form-status"></div>
+          </form>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2026 Harshil Sheth. All rights reserved.</p>
-                <div class="footer-links">
-                    <a href="https://github.com/Harshil-Sheth" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://linkedin.com/in/harshilsheth1888" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    <a href="mailto:harshilsheth181888@gmail.com">Email</a>
-                </div>
-            </div>
+      <div class="container">
+        <div class="footer-content">
+          <p>&copy; 2026 Harshil Sheth. All rights reserved.</p>
+          <div class="footer-links">
+            <a
+              href="https://github.com/Harshil-Sheth"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+            <a
+              href="https://linkedin.com/in/harshilsheth1888"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn</a
+            >
+            <a href="mailto:harshilsheth181888@gmail.com">Email</a>
+          </div>
         </div>
+      </div>
     </footer>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

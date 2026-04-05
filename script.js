@@ -141,10 +141,10 @@ class MetricsCounter {
             const updateCounter = () => {
                 current += increment;
                 if (current < target) {
-                    metric.textContent = Math.floor(current).toLocaleString();
+                    metric.textContent = Math.floor(current).toLocaleString() + "+";
                     requestAnimationFrame(updateCounter);
                 } else {
-                    metric.textContent = target.toLocaleString();
+                    metric.textContent = target.toLocaleString() + "+";
                 }
             };
 
