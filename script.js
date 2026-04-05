@@ -5,8 +5,7 @@
    CONFIGURATION
    ======================================== */
 const CONFIG = {
-  API_BASE_URL:
-    "https://job-hunter-service-l3zs550q1-rajshah181888gmailcoms-projects.vercel.app/api/portfolio",
+  API_BASE_URL: "https://job-hunter-service.vercel.app/api/portfolio",
   //   API_BASE_URL: "http://localhost:5000/api/portfolio",
   RESUME_URL: "/api/portfolio/resume/download",
 };
