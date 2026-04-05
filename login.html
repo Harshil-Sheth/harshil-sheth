@@ -1,526 +1,596 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio Admin Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <style>
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            background: var(--bg-secondary);
-        }
+      .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: var(--bg-secondary);
+      }
 
+      .login-card {
+        background: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 3rem;
+        max-width: 450px;
+        width: 100%;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .login-header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .login-header p {
+        color: var(--text-tertiary);
+        font-size: 0.95rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-family: inherit;
+        transition: var(--transition);
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+
+      .form-group input:disabled {
+        background: var(--bg-tertiary);
+        cursor: not-allowed;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: var(--bg-primary);
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .status-message {
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        display: none;
+      }
+
+      .status-message.success {
+        display: block;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+      }
+
+      .status-message.error {
+        display: block;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+      }
+
+      .status-message.info {
+        display: block;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        color: var(--text-tertiary);
+      }
+
+      .countdown {
+        text-align: center;
+        margin-top: 1rem;
+        color: var(--text-tertiary);
+        font-size: 0.875rem;
+      }
+
+      .back-link {
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      .back-link a {
+        color: var(--text-tertiary);
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: var(--transition);
+      }
+
+      .back-link a:hover {
+        color: var(--text-primary);
+      }
+
+      .otp-input-group {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+
+      .otp-input {
+        width: 3rem;
+        height: 3.5rem;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        border: 2px solid var(--border-color);
+        border-radius: 4px;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+      }
+
+      .otp-input:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+
+      @media (max-width: 480px) {
         .login-card {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 3rem;
-            max-width: 450px;
-            width: 100%;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-header p {
-            color: var(--text-tertiary);
-            font-size: 0.95rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 1rem;
-            font-family: inherit;
-            transition: var(--transition);
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .form-group input:disabled {
-            background: var(--bg-tertiary);
-            cursor: not-allowed;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 0.875rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: var(--bg-primary);
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .status-message {
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            display: none;
-        }
-
-        .status-message.success {
-            display: block;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        .status-message.error {
-            display: block;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        .status-message.info {
-            display: block;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            color: var(--text-tertiary);
-        }
-
-        .countdown {
-            text-align: center;
-            margin-top: 1rem;
-            color: var(--text-tertiary);
-            font-size: 0.875rem;
-        }
-
-        .back-link {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .back-link a {
-            color: var(--text-tertiary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-
-        .back-link a:hover {
-            color: var(--text-primary);
-        }
-
-        .otp-input-group {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
+          padding: 2rem 1.5rem;
         }
 
         .otp-input {
-            width: 3rem;
-            height: 3.5rem;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 600;
-            border: 2px solid var(--border-color);
-            border-radius: 4px;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+          width: 2.5rem;
+          height: 3rem;
+          font-size: 1.25rem;
         }
-
-        .otp-input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .otp-input {
-                width: 2.5rem;
-                height: 3rem;
-                font-size: 1.25rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Theme Toggle -->
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">
-        <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
+    <button
+      id="theme-toggle"
+      class="theme-toggle"
+      aria-label="Toggle dark/light mode"
+    >
+      <svg
+        class="sun-icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg
+        class="moon-icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
     </button>
 
     <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <h1>Portfolio Admin</h1>
-                <p>Secure OTP-based login</p>
-            </div>
-
-            <div id="status-message" class="status-message"></div>
-
-            <!-- Email Form -->
-            <form id="email-form" style="display: block;">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        placeholder="Enter your email"
-                        required
-                        autofocus
-                    >
-                </div>
-                <button type="submit" class="btn btn-primary" id="send-otp-btn">
-                    Send OTP
-                </button>
-            </form>
-
-            <!-- OTP Form (hidden initially) -->
-            <form id="otp-form" style="display: none;">
-                <div class="form-group">
-                    <label>Enter 6-Digit OTP</label>
-                    <div class="otp-input-group">
-                        <input type="text" maxlength="1" class="otp-input" data-index="0">
-                        <input type="text" maxlength="1" class="otp-input" data-index="1">
-                        <input type="text" maxlength="1" class="otp-input" data-index="2">
-                        <input type="text" maxlength="1" class="otp-input" data-index="3">
-                        <input type="text" maxlength="1" class="otp-input" data-index="4">
-                        <input type="text" maxlength="1" class="otp-input" data-index="5">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary" id="verify-otp-btn">
-                    Verify & Login
-                </button>
-
-                <div class="countdown" id="countdown"></div>
-
-                <button type="button" class="btn" id="resend-btn" style="margin-top: 1rem; display: none;">
-                    Resend OTP
-                </button>
-            </form>
-
-            <div class="back-link">
-                <a href="index.html">← Back to Portfolio</a>
-            </div>
+      <div class="login-card">
+        <div class="login-header">
+          <h1>Portfolio Admin</h1>
+          <p>Secure OTP-based login</p>
         </div>
+
+        <div id="status-message" class="status-message"></div>
+
+        <!-- Email Form -->
+        <form id="email-form" style="display: block">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+              autofocus
+            />
+          </div>
+          <button type="submit" class="btn btn-primary" id="send-otp-btn">
+            Send OTP
+          </button>
+        </form>
+
+        <!-- OTP Form (hidden initially) -->
+        <form id="otp-form" style="display: none">
+          <div class="form-group">
+            <label>Enter 6-Digit OTP</label>
+            <div class="otp-input-group">
+              <input
+                type="text"
+                maxlength="1"
+                class="otp-input"
+                data-index="0"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="otp-input"
+                data-index="1"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="otp-input"
+                data-index="2"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="otp-input"
+                data-index="3"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="otp-input"
+                data-index="4"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="otp-input"
+                data-index="5"
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="verify-otp-btn">
+            Verify & Login
+          </button>
+
+          <div class="countdown" id="countdown"></div>
+
+          <button
+            type="button"
+            class="btn"
+            id="resend-btn"
+            style="margin-top: 1rem; display: none"
+          >
+            Resend OTP
+          </button>
+        </form>
+
+        <div class="back-link">
+          <a href="index.html">← Back to Portfolio</a>
+        </div>
+      </div>
     </div>
 
     <script>
-        const API_BASE_URL = 'http://localhost:5000/api/authentication';
+      const API_BASE_URL =
+        "https://job-hunter-service.vercel.app/api/authentication";
 
-        // Theme Management
-        class ThemeManager {
-            constructor() {
-                this.themeToggle = document.getElementById('theme-toggle');
-                this.currentTheme = localStorage.getItem('theme') || 'light';
-                this.init();
-            }
-
-            init() {
-                document.documentElement.setAttribute('data-theme', this.currentTheme);
-                this.themeToggle.addEventListener('click', () => this.toggleTheme());
-            }
-
-            toggleTheme() {
-                this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', this.currentTheme);
-                localStorage.setItem('theme', this.currentTheme);
-            }
+      // Theme Management
+      class ThemeManager {
+        constructor() {
+          this.themeToggle = document.getElementById("theme-toggle");
+          this.currentTheme = localStorage.getItem("theme") || "light";
+          this.init();
         }
 
-        // Login Manager
-        class AdminLogin {
-            constructor() {
-                this.email = '';
-                this.retryAfter = 0;
-                this.countdownInterval = null;
-                this.init();
-            }
-
-            init() {
-                // Check if already logged in
-                const token = localStorage.getItem('admin_token');
-                if (token) {
-                    this.verifyExistingToken(token);
-                }
-
-                // Email form
-                document.getElementById('email-form').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.sendOTP();
-                });
-
-                // OTP form
-                document.getElementById('otp-form').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.verifyOTP();
-                });
-
-                // Resend button
-                document.getElementById('resend-btn').addEventListener('click', () => {
-                    this.sendOTP();
-                });
-
-                // OTP input auto-focus
-                this.setupOTPInputs();
-            }
-
-            setupOTPInputs() {
-                const inputs = document.querySelectorAll('.otp-input');
-                inputs.forEach((input, index) => {
-                    input.addEventListener('input', (e) => {
-                        if (e.target.value.length === 1) {
-                            if (index < inputs.length - 1) {
-                                inputs[index + 1].focus();
-                            }
-                        }
-                    });
-
-                    input.addEventListener('keydown', (e) => {
-                        if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                            inputs[index - 1].focus();
-                        }
-                    });
-
-                    input.addEventListener('paste', (e) => {
-                        e.preventDefault();
-                        const pastedData = e.clipboardData.getData('text').slice(0, 6);
-                        pastedData.split('').forEach((char, i) => {
-                            if (inputs[i]) {
-                                inputs[i].value = char;
-                            }
-                        });
-                        if (pastedData.length === 6) {
-                            inputs[5].focus();
-                        }
-                    });
-                });
-            }
-
-            getOTPValue() {
-                const inputs = document.querySelectorAll('.otp-input');
-                return Array.from(inputs).map(input => input.value).join('');
-            }
-
-            clearOTPInputs() {
-                const inputs = document.querySelectorAll('.otp-input');
-                inputs.forEach(input => input.value = '');
-                inputs[0].focus();
-            }
-
-            showStatus(message, type = 'info') {
-                const statusEl = document.getElementById('status-message');
-                statusEl.textContent = message;
-                statusEl.className = `status-message ${type}`;
-                statusEl.style.display = 'block';
-            }
-
-            hideStatus() {
-                document.getElementById('status-message').style.display = 'none';
-            }
-
-            async verifyExistingToken(token) {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/verify-token`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-
-                    if (response.ok) {
-                        // Token is valid, redirect to admin dashboard
-                        window.location.href = 'admin.html';
-                    } else {
-                        // Token invalid, clear it
-                        localStorage.removeItem('admin_token');
-                    }
-                } catch (error) {
-                    localStorage.removeItem('admin_token');
-                }
-            }
-
-            async sendOTP() {
-                const emailInput = document.getElementById('email');
-                this.email = emailInput.value.trim();
-
-                if (!this.email) {
-                    this.showStatus('Please enter your email address', 'error');
-                    return;
-                }
-
-                const sendBtn = document.getElementById('send-otp-btn');
-                sendBtn.disabled = true;
-                sendBtn.textContent = 'Sending...';
-
-                try {
-                    const response = await fetch(`${API_BASE_URL}/admin/send-otp`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ email: this.email })
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        this.showStatus(data.message, 'success');
-                        this.retryAfter = data.retryAfter || 60;
-                        this.showOTPForm();
-                        this.startCountdown();
-                    } else {
-                        this.showStatus(data.message || 'Failed to send OTP', 'error');
-                        sendBtn.disabled = false;
-                        sendBtn.textContent = 'Send OTP';
-                    }
-                } catch (error) {
-                    this.showStatus('Network error. Please try again.', 'error');
-                    sendBtn.disabled = false;
-                    sendBtn.textContent = 'Send OTP';
-                }
-            }
-
-            showOTPForm() {
-                document.getElementById('email-form').style.display = 'none';
-                document.getElementById('otp-form').style.display = 'block';
-                this.clearOTPInputs();
-            }
-
-            startCountdown() {
-                let seconds = this.retryAfter;
-                const countdownEl = document.getElementById('countdown');
-                const resendBtn = document.getElementById('resend-btn');
-                
-                resendBtn.style.display = 'none';
-
-                this.countdownInterval = setInterval(() => {
-                    seconds--;
-                    countdownEl.textContent = `Resend OTP in ${seconds}s`;
-
-                    if (seconds <= 0) {
-                        clearInterval(this.countdownInterval);
-                        countdownEl.textContent = '';
-                        resendBtn.style.display = 'block';
-                    }
-                }, 1000);
-            }
-
-            async verifyOTP() {
-                const otp = this.getOTPValue();
-
-                if (otp.length !== 6) {
-                    this.showStatus('Please enter all 6 digits', 'error');
-                    return;
-                }
-
-                const verifyBtn = document.getElementById('verify-otp-btn');
-                verifyBtn.disabled = true;
-                verifyBtn.textContent = 'Verifying...';
-
-                try {
-                    const response = await fetch(`${API_BASE_URL}/admin/verify-otp`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            email: this.email,
-                            otp: otp
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        // Store token
-                        localStorage.setItem('admin_token', data.token);
-                        
-                        this.showStatus('Login successful! Redirecting...', 'success');
-                        
-                        // Redirect to admin dashboard
-                        setTimeout(() => {
-                            window.location.href = 'admin.html';
-                        }, 1000);
-                    } else {
-                        this.showStatus(data.message || 'Invalid OTP', 'error');
-                        this.clearOTPInputs();
-                        verifyBtn.disabled = false;
-                        verifyBtn.textContent = 'Verify & Login';
-                    }
-                } catch (error) {
-                    this.showStatus('Network error. Please try again.', 'error');
-                    verifyBtn.disabled = false;
-                    verifyBtn.textContent = 'Verify & Login';
-                }
-            }
+        init() {
+          document.documentElement.setAttribute(
+            "data-theme",
+            this.currentTheme,
+          );
+          this.themeToggle.addEventListener("click", () => this.toggleTheme());
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            new ThemeManager();
-            new AdminLogin();
-        });
+        toggleTheme() {
+          this.currentTheme = this.currentTheme === "light" ? "dark" : "light";
+          document.documentElement.setAttribute(
+            "data-theme",
+            this.currentTheme,
+          );
+          localStorage.setItem("theme", this.currentTheme);
+        }
+      }
+
+      // Login Manager
+      class AdminLogin {
+        constructor() {
+          this.email = "";
+          this.retryAfter = 0;
+          this.countdownInterval = null;
+          this.init();
+        }
+
+        init() {
+          // Check if already logged in
+          const token = localStorage.getItem("admin_token");
+          if (token) {
+            this.verifyExistingToken(token);
+          }
+
+          // Email form
+          document
+            .getElementById("email-form")
+            .addEventListener("submit", (e) => {
+              e.preventDefault();
+              this.sendOTP();
+            });
+
+          // OTP form
+          document
+            .getElementById("otp-form")
+            .addEventListener("submit", (e) => {
+              e.preventDefault();
+              this.verifyOTP();
+            });
+
+          // Resend button
+          document
+            .getElementById("resend-btn")
+            .addEventListener("click", () => {
+              this.sendOTP();
+            });
+
+          // OTP input auto-focus
+          this.setupOTPInputs();
+        }
+
+        setupOTPInputs() {
+          const inputs = document.querySelectorAll(".otp-input");
+          inputs.forEach((input, index) => {
+            input.addEventListener("input", (e) => {
+              if (e.target.value.length === 1) {
+                if (index < inputs.length - 1) {
+                  inputs[index + 1].focus();
+                }
+              }
+            });
+
+            input.addEventListener("keydown", (e) => {
+              if (e.key === "Backspace" && !e.target.value && index > 0) {
+                inputs[index - 1].focus();
+              }
+            });
+
+            input.addEventListener("paste", (e) => {
+              e.preventDefault();
+              const pastedData = e.clipboardData.getData("text").slice(0, 6);
+              pastedData.split("").forEach((char, i) => {
+                if (inputs[i]) {
+                  inputs[i].value = char;
+                }
+              });
+              if (pastedData.length === 6) {
+                inputs[5].focus();
+              }
+            });
+          });
+        }
+
+        getOTPValue() {
+          const inputs = document.querySelectorAll(".otp-input");
+          return Array.from(inputs)
+            .map((input) => input.value)
+            .join("");
+        }
+
+        clearOTPInputs() {
+          const inputs = document.querySelectorAll(".otp-input");
+          inputs.forEach((input) => (input.value = ""));
+          inputs[0].focus();
+        }
+
+        showStatus(message, type = "info") {
+          const statusEl = document.getElementById("status-message");
+          statusEl.textContent = message;
+          statusEl.className = `status-message ${type}`;
+          statusEl.style.display = "block";
+        }
+
+        hideStatus() {
+          document.getElementById("status-message").style.display = "none";
+        }
+
+        async verifyExistingToken(token) {
+          try {
+            const response = await fetch(`${API_BASE_URL}/verify-token`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+
+            if (response.ok) {
+              // Token is valid, redirect to admin dashboard
+              window.location.href = "admin.html";
+            } else {
+              // Token invalid, clear it
+              localStorage.removeItem("admin_token");
+            }
+          } catch (error) {
+            localStorage.removeItem("admin_token");
+          }
+        }
+
+        async sendOTP() {
+          const emailInput = document.getElementById("email");
+          this.email = emailInput.value.trim();
+
+          if (!this.email) {
+            this.showStatus("Please enter your email address", "error");
+            return;
+          }
+
+          const sendBtn = document.getElementById("send-otp-btn");
+          sendBtn.disabled = true;
+          sendBtn.textContent = "Sending...";
+
+          try {
+            const response = await fetch(`${API_BASE_URL}/admin/send-otp`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email: this.email }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              this.showStatus(data.message, "success");
+              this.retryAfter = data.retryAfter || 60;
+              this.showOTPForm();
+              this.startCountdown();
+            } else {
+              this.showStatus(data.message || "Failed to send OTP", "error");
+              sendBtn.disabled = false;
+              sendBtn.textContent = "Send OTP";
+            }
+          } catch (error) {
+            this.showStatus("Network error. Please try again.", "error");
+            sendBtn.disabled = false;
+            sendBtn.textContent = "Send OTP";
+          }
+        }
+
+        showOTPForm() {
+          document.getElementById("email-form").style.display = "none";
+          document.getElementById("otp-form").style.display = "block";
+          this.clearOTPInputs();
+        }
+
+        startCountdown() {
+          let seconds = this.retryAfter;
+          const countdownEl = document.getElementById("countdown");
+          const resendBtn = document.getElementById("resend-btn");
+
+          resendBtn.style.display = "none";
+
+          this.countdownInterval = setInterval(() => {
+            seconds--;
+            countdownEl.textContent = `Resend OTP in ${seconds}s`;
+
+            if (seconds <= 0) {
+              clearInterval(this.countdownInterval);
+              countdownEl.textContent = "";
+              resendBtn.style.display = "block";
+            }
+          }, 1000);
+        }
+
+        async verifyOTP() {
+          const otp = this.getOTPValue();
+
+          if (otp.length !== 6) {
+            this.showStatus("Please enter all 6 digits", "error");
+            return;
+          }
+
+          const verifyBtn = document.getElementById("verify-otp-btn");
+          verifyBtn.disabled = true;
+          verifyBtn.textContent = "Verifying...";
+
+          try {
+            const response = await fetch(`${API_BASE_URL}/admin/verify-otp`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: this.email,
+                otp: otp,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              // Store token
+              localStorage.setItem("admin_token", data.token);
+
+              this.showStatus("Login successful! Redirecting...", "success");
+
+              // Redirect to admin dashboard
+              setTimeout(() => {
+                window.location.href = "admin.html";
+              }, 1000);
+            } else {
+              this.showStatus(data.message || "Invalid OTP", "error");
+              this.clearOTPInputs();
+              verifyBtn.disabled = false;
+              verifyBtn.textContent = "Verify & Login";
+            }
+          } catch (error) {
+            this.showStatus("Network error. Please try again.", "error");
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = "Verify & Login";
+          }
+        }
+      }
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        new ThemeManager();
+        new AdminLogin();
+      });
     </script>
-</body>
+  </body>
 </html>
