@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Analytics - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .admin-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .data-section {
+            margin-bottom: 3rem;
+        }
+
+        .data-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            border: 1px solid var(--border-color);
+        }
+
+        .badge-new {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .badge-read {
+            background: var(--bg-secondary);
+            color: var(--text-tertiary);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-tertiary);
+        }
+
+        .error {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-tertiary);
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 1rem;
+            }
+
+            .data-table {
+                font-size: 0.875rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode" style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 1000;">
+        <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h1>Portfolio Analytics Dashboard</h1>
+                <button id="logout-btn" class="btn btn-secondary" style="width: auto; padding: 0.5rem 1.5rem;">
+                    Logout
+                </button>
+            </div>
+            <p style="color: var(--text-tertiary);">Monitor visitor activity, form submissions, and resume downloads</p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="admin-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="total-visitors">-</div>
+                <div class="stat-label">Total Visitors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="unique-visitors">-</div>
+                <div class="stat-label">Unique Visitors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="new-visitors">-</div>
+                <div class="stat-label">New Visitors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="returning-visitors">-</div>
+                <div class="stat-label">Returning</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-downloads">-</div>
+                <div class="stat-label">Resume Downloads</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-contacts">-</div>
+                <div class="stat-label">Contact Messages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-inquiries">-</div>
+                <div class="stat-label">Freelance Inquiries</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avg-time">-</div>
+                <div class="stat-label">Avg Time (sec)</div>
+            </div>
+        </div>
+
+        <!-- Visitor Locations -->
+        <div class="data-section">
+            <h2>Visitor Locations</h2>
+            <div id="locations-loading" class="loading">Loading visitor locations...</div>
+            <div id="locations-error" class="error" style="display: none;"></div>
+            <div id="locations-container"></div>
+        </div>
+
+        <!-- Export Section -->
+        <div class="data-section">
+            <h2>Export Data</h2>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-secondary" onclick="exportData('visitors')">Export Visitors CSV</button>
+                <button class="btn btn-secondary" onclick="exportData('downloads')">Export Downloads CSV</button>
+                <button class="btn btn-secondary" onclick="exportData('contacts')">Export Contacts CSV</button>
+                <button class="btn btn-secondary" onclick="exportData('inquiries')">Export Inquiries CSV</button>
+            </div>
+        </div>
+
+        <!-- Contact Messages Section -->
+        <div class="data-section">
+            <h2>Contact Messages</h2>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="contact-filter">Filter by Status</label>
+                    <select id="contact-filter">
+                        <option value="">All Messages</option>
+                        <option value="false">Unread</option>
+                        <option value="true">Read</option>
+                    </select>
+                </div>
+            </div>
+            <div id="contacts-loading" class="loading">Loading contact messages...</div>
+            <div id="contacts-error" class="error" style="display: none;"></div>
+            <div id="contacts-container"></div>
+        </div>
+
+        <!-- Freelance Inquiries Section -->
+        <div class="data-section">
+            <h2>Freelance Inquiries</h2>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="inquiry-filter">Filter by Status</label>
+                    <select id="inquiry-filter">
+                        <option value="">All Inquiries</option>
+                        <option value="new">New</option>
+                        <option value="reviewed">Reviewed</option>
+                        <option value="in-discussion">In Discussion</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+            <div id="inquiries-loading" class="loading">Loading freelance inquiries...</div>
+            <div id="inquiries-error" class="error" style="display: none;"></div>
+            <div id="inquiries-container"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api/portfolio';
+
+        // Theme Management
+        class ThemeManager {
+            constructor() {
+                this.themeToggle = document.getElementById('theme-toggle');
+                this.currentTheme = localStorage.getItem('theme') || 'light';
+                this.init();
+            }
+
+            init() {
+                document.documentElement.setAttribute('data-theme', this.currentTheme);
+                if (this.themeToggle) {
+                    this.themeToggle.addEventListener('click', () => this.toggleTheme());
+                }
+            }
+
+            toggleTheme() {
+                this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', this.currentTheme);
+                localStorage.setItem('theme', this.currentTheme);
+            }
+        }
+
+        // Auth functions
+        function getAuthToken() {
+            return localStorage.getItem('admin_token');
+        }
+
+        function logout() {
+            localStorage.removeItem('admin_token');
+            window.location.href = 'login.html';
+        }
+
+        function exportData(type) {
+            const token = getAuthToken();
+            fetch(`${API_BASE_URL}/admin/export?type=${type}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${type}_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            })
+            .catch(error => {
+                console.error('Export failed:', error);
+                alert('Failed to export data');
+            });
+        }
+
+        // Admin Dashboard
+        class AdminDashboard {
+            constructor() {
+                this.token = getAuthToken();
+                this.init();
+            }
+
+            async init() {
+                await this.loadAnalytics();
+                await this.loadVisitorLocations();
+                await this.loadContactMessages();
+                await this.loadFreelanceInquiries();
+
+                // Filter listeners
+                document.getElementById('contact-filter').addEventListener('change', () => this.loadContactMessages());
+                document.getElementById('inquiry-filter').addEventListener('change', () => this.loadFreelanceInquiries());
+            }
+
+            async loadVisitorLocations() {
+                const loading = document.getElementById('locations-loading');
+                const errorEl = document.getElementById('locations-error');
+                const container = document.getElementById('locations-container');
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/admin/visitor-locations`, {
+                        headers: { 'Authorization': `Bearer ${this.token}` }
+                    });
+                    
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            logout();
+                            return;
+                        }
+                        throw new Error('Failed to load locations');
+                    }
+
+                    const result = await response.json();
+                    loading.style.display = 'none';
+
+                    if (!result.data.locations || result.data.locations.length === 0) {
+                        errorEl.innerHTML = '<strong>No visitor location data available.</strong><br>Visitors from localhost won\'t have geographic data. This will work in production.';
+                        errorEl.style.display = 'block';
+                        return;
+                    }
+
+                    this.renderLocations(result.data.locations);
+                } catch (error) {
+                    console.error('Error loading locations:', error);
+                    loading.style.display = 'none';
+                    errorEl.textContent = `Error: ${error.message}`;
+                    errorEl.style.display = 'block';
+                }
+            }
+
+            renderLocations(locations) {
+                const container = document.getElementById('locations-container');
+                const sortedLocations = [...locations].sort((a, b) => b.count - a.count);
+
+                const html = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                        ${sortedLocations.map((loc, index) => `
+                            <div style="padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); transition: all 0.3s;" onmouseover="this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                    <div>
+                                        <div style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary);">${index + 1}.</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">${loc.count}</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase;">visitor${loc.count > 1 ? 's' : ''}</div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 0.75rem;">
+                                    <div style="font-size: 1.125rem; font-weight: 600; color: var(--text-primary);">${this.escapeHtml(loc.city || 'Unknown')}</div>
+                                    <div style="font-size: 0.95rem; color: var(--text-secondary);">${this.escapeHtml(loc.country || 'Unknown')}</div>
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--text-tertiary); font-family: monospace;">
+                                    ${loc.latitude.toFixed(4)}°, ${loc.longitude.toFixed(4)}°
+                                </div>
+                                ${loc.visitors.length > 0 ? `
+                                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                                        <div style="font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 0.5rem;">Recent Sources</div>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                            ${[...new Set(loc.visitors.filter(v => v.utmSource).map(v => v.utmSource))].slice(0, 3).map(source => `
+                                                <span style="font-size: 0.75rem; padding: 0.25rem 0.75rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-secondary);">
+                                                    ${this.escapeHtml(source)}
+                                                </span>
+                                            `).join('')}
+                                            ${loc.visitors.filter(v => !v.utmSource).length > 0 ? '<span style="font-size: 0.75rem; padding: 0.25rem 0.75rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-secondary);">Direct</span>' : ''}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                container.innerHTML = html;
+            }
+
+            async loadAnalytics() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/admin/analytics`, {
+                        headers: { 'Authorization': `Bearer ${this.token}` }
+                    });
+                    
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            logout();
+                            return;
+                        }
+                        throw new Error('Failed to load analytics');
+                    }
+
+                    const result = await response.json();
+                    const { overview } = result.data;
+
+                    document.getElementById('total-visitors').textContent = overview.totalVisitors.toLocaleString();
+                    document.getElementById('unique-visitors').textContent = overview.uniqueVisitors.toLocaleString();
+                    document.getElementById('new-visitors').textContent = overview.newVisitors.toLocaleString();
+                    document.getElementById('returning-visitors').textContent = overview.returningVisitors.toLocaleString();
+                    document.getElementById('total-downloads').textContent = overview.totalResumeDownloads.toLocaleString();
+                    document.getElementById('total-contacts').textContent = overview.totalContactMessages.toLocaleString();
+                    document.getElementById('total-inquiries').textContent = overview.totalFreelanceInquiries.toLocaleString();
+                    document.getElementById('avg-time').textContent = Math.round(overview.averageTimeSpent);
+                } catch (error) {
+                    console.error('Error loading analytics:', error);
+                }
+            }
+
+            async loadContactMessages() {
+                const filter = document.getElementById('contact-filter').value;
+                const loading = document.getElementById('contacts-loading');
+                const errorEl = document.getElementById('contacts-error');
+                const container = document.getElementById('contacts-container');
+
+                loading.style.display = 'block';
+                errorEl.style.display = 'none';
+                container.innerHTML = '';
+
+                try {
+                    const url = new URL(`${API_BASE_URL}/admin/contact-messages`);
+                    if (filter) url.searchParams.set('isRead', filter);
+
+                    const response = await fetch(url, {
+                        headers: { 'Authorization': `Bearer ${this.token}` }
+                    });
+                    
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            logout();
+                            return;
+                        }
+                        throw new Error('Failed to load');
+                    }
+
+                    const result = await response.json();
+                    loading.style.display = 'none';
+
+                    if (result.data.length === 0) {
+                        container.innerHTML = '<div class="empty-state">No contact messages found</div>';
+                        return;
+                    }
+
+                    const table = document.createElement('table');
+                    table.className = 'data-table';
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${result.data.map(msg => `
+                                <tr>
+                                    <td>${new Date(msg.submittedAt).toLocaleDateString()}</td>
+                                    <td>${this.escapeHtml(msg.name)}</td>
+                                    <td><a href="mailto:${msg.email}">${this.escapeHtml(msg.email)}</a></td>
+                                    <td>${this.escapeHtml(msg.subject)}</td>
+                                    <td>${this.escapeHtml(msg.message.substring(0, 100))}${msg.message.length > 100 ? '...' : ''}</td>
+                                    <td><span class="badge ${msg.isRead ? 'badge-read' : 'badge-new'}">${msg.isRead ? 'Read' : 'New'}</span></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    `;
+                    container.appendChild(table);
+                } catch (error) {
+                    loading.style.display = 'none';
+                    errorEl.textContent = `Error: ${error.message}`;
+                    errorEl.style.display = 'block';
+                }
+            }
+
+            async loadFreelanceInquiries() {
+                const filter = document.getElementById('inquiry-filter').value;
+                const loading = document.getElementById('inquiries-loading');
+                const errorEl = document.getElementById('inquiries-error');
+                const container = document.getElementById('inquiries-container');
+
+                loading.style.display = 'block';
+                errorEl.style.display = 'none';
+                container.innerHTML = '';
+
+                try {
+                    const url = new URL(`${API_BASE_URL}/admin/freelance-inquiries`);
+                    if (filter) url.searchParams.set('status', filter);
+
+                    const response = await fetch(url, {
+                        headers: { 'Authorization': `Bearer ${this.token}` }
+                    });
+                    
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            logout();
+                            return;
+                        }
+                        throw new Error('Failed to load');
+                    }
+
+                    const result = await response.json();
+                    loading.style.display = 'none';
+
+                    if (result.data.length === 0) {
+                        container.innerHTML = '<div class="empty-state">No freelance inquiries found</div>';
+                        return;
+                    }
+
+                    const table = document.createElement('table');
+                    table.className = 'data-table';
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Company</th>
+                                <th>Budget</th>
+                                <th>Project</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${result.data.map(inquiry => `
+                                <tr>
+                                    <td>${new Date(inquiry.submittedAt).toLocaleDateString()}</td>
+                                    <td>${this.escapeHtml(inquiry.name)}</td>
+                                    <td><a href="mailto:${inquiry.email}">${this.escapeHtml(inquiry.email)}</a></td>
+                                    <td>${inquiry.company ? this.escapeHtml(inquiry.company) : '-'}</td>
+                                    <td>${this.escapeHtml(inquiry.budget)}</td>
+                                    <td>${this.escapeHtml(inquiry.projectDescription.substring(0, 100))}${inquiry.projectDescription.length > 100 ? '...' : ''}</td>
+                                    <td><span class="badge badge-${inquiry.status}">${inquiry.status}</span></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    `;
+                    container.appendChild(table);
+                } catch (error) {
+                    loading.style.display = 'none';
+                    errorEl.textContent = `Error: ${error.message}`;
+                    errorEl.style.display = 'block';
+                }
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Initializing admin dashboard...');
+            
+            // Check token
+            const token = getAuthToken();
+            console.log('Token exists:', !!token);
+            
+            if (!token) {
+                console.log('No token - redirecting to login');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Token exists - initialize
+            new ThemeManager();
+            new AdminDashboard();
+
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', logout);
+        });
+    </script>
+</body>
+</html>

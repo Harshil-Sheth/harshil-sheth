@@ -1,0 +1,20 @@
+{
+  "name": "harshil-sheth-portfolio",
+  "version": "1.0.0",
+  "description": "Minimalist portfolio website for Harshil Sheth",
+  "type": "module",
+  "scripts": {
+    "dev": "npx http-server . -p 3001 -o",
+    "build": "echo 'No build step required - static HTML/CSS/JS'"
+  },
+  "keywords": [
+    "portfolio",
+    "software-engineer",
+    "minimalist"
+  ],
+  "author": "Harshil Sheth",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
