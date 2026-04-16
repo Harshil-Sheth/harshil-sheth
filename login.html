@@ -320,9 +320,9 @@
       </div>
     </div>
 
+    <script src="config.js"></script>
     <script>
-      const API_BASE_URL =
-        "https://job-hunter-service.vercel.app/api/authentication";
+      const API_BASE_URL = window.__PORTFOLIO_ENV__.authApiBase;
 
       // Theme Management
       class ThemeManager {

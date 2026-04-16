@@ -510,7 +510,63 @@ body {
 .project-description {
     color: var(--text-secondary);
     line-height: 1.7;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Text-style link: bottom border + icon (reads clearly as a link, stays on-theme) */
+.project-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0 0.2rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 38%, transparent);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.project-link-btn:hover {
+    color: var(--text-primary);
+    border-bottom-color: var(--text-primary);
+}
+
+.project-link-btn:visited {
+    color: var(--text-secondary);
+    border-bottom-color: color-mix(in srgb, var(--text-primary) 28%, transparent);
+}
+
+.project-link-btn:hover:visited {
+    color: var(--text-primary);
+    border-bottom-color: var(--text-primary);
+}
+
+.project-link-btn:focus-visible {
+    outline: 2px solid var(--text-tertiary);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+.project-link-btn svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    color: currentColor;
+    opacity: 0.85;
 }
 
 .project-tech {
@@ -586,7 +642,7 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     font-size: 0.8rem;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
 }
 
 /* ========================================

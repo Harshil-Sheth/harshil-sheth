@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio Analytics - Admin Dashboard</title>
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
     <style>
       .admin-container {
         max-width: 1400px;
@@ -112,6 +117,49 @@
         color: var(--text-tertiary);
       }
 
+      .table-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 1rem;
+      }
+
+      .visitor-log-filters {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding: 1.25rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background: var(--bg-secondary);
+      }
+
+      .visitor-log-filters .filter-actions {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .visitor-log-pagination {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem 1rem;
+        margin-top: 1rem;
+      }
+
+      .visitor-log-pagination button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      #visitor-log-page-info {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
       .filters {
         display: flex;
         gap: 1rem;
@@ -162,6 +210,48 @@
         color: var(--text-tertiary);
       }
 
+      .visitor-map-wrap {
+        margin-bottom: 1.5rem;
+      }
+
+      .visitor-map-leaflet {
+        width: 100%;
+        height: 420px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background: var(--bg-secondary);
+        z-index: 1;
+      }
+
+      .map-hint {
+        font-size: 0.8125rem;
+        color: var(--text-tertiary);
+        margin: 0 0 0.75rem;
+      }
+
+      .leaflet-control-attribution {
+        font-size: 10px !important;
+        max-width: calc(100% - 60px);
+        white-space: normal;
+        line-height: 1.3;
+      }
+
+      [data-theme="dark"] .leaflet-control-attribution {
+        background: rgba(20, 20, 20, 0.82) !important;
+        color: var(--text-tertiary) !important;
+      }
+
+      [data-theme="light"] .leaflet-control-attribution {
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: var(--text-secondary) !important;
+      }
+
+      #visitor-map-empty {
+        font-size: 0.875rem;
+        color: var(--text-tertiary);
+        margin: 0.5rem 0 0;
+      }
+
       @media (max-width: 768px) {
         .admin-container {
           padding: 1rem;
@@ -188,7 +278,7 @@
       id="theme-toggle"
       class="theme-toggle"
       aria-label="Toggle dark/light mode"
-      style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 1000"
+      style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 1100"
     >
       <svg
         class="sun-icon"
@@ -280,6 +370,33 @@
           <div class="stat-value" id="avg-time">-</div>
           <div class="stat-label">Avg Time (sec)</div>
         </div>
+        <div class="stat-card">
+          <div class="stat-value" id="total-ui-clicks">-</div>
+          <div class="stat-label">UI Clicks (nav &amp; links)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="click-sessions">-</div>
+          <div class="stat-label">Sessions with clicks</div>
+        </div>
+      </div>
+
+      <!-- Navigation & link clicks -->
+      <div class="data-section" id="click-analytics-section">
+        <h2>Navigation &amp; link clicks</h2>
+        <p
+          style="
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            margin: -0.5rem 0 1rem;
+          "
+        >
+          Tracked per visitor session: nav, project links, footer, hero CTAs,
+          forms. Tied to <code>visitorId</code> when the page view was
+          recorded.
+        </p>
+        <div id="clicks-loading" class="loading">Loading click analytics…</div>
+        <div id="clicks-error" class="error" style="display: none"></div>
+        <div id="clicks-container" style="display: none"></div>
       </div>
 
       <!-- Visitor Locations -->
@@ -289,7 +406,197 @@
           Loading visitor locations...
         </div>
         <div id="locations-error" class="error" style="display: none"></div>
+        <div id="visitor-map-wrap" class="visitor-map-wrap" style="display: none">
+          <p class="map-hint">
+            Drag to pan · Scroll or pinch to zoom · Click a marker for details
+          </p>
+          <div id="visitor-map-leaflet" class="visitor-map-leaflet"></div>
+          <p id="visitor-map-empty" style="display: none">
+            Location records have no latitude/longitude (common for localhost or
+            private IPs). Deploy to production or test with a public IP to see
+            markers on the map.
+          </p>
+        </div>
         <div id="locations-container"></div>
+      </div>
+
+      <!-- Detailed visit log -->
+      <div class="data-section">
+        <h2>Detailed visit log</h2>
+        <p
+          style="
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            margin: -0.5rem 0 1rem;
+          "
+        >
+          Each row is one page view. Times are shown in your browser&apos;s
+          local timezone.
+        </p>
+        <div class="visitor-log-filters" id="visitor-log-filters">
+          <div class="filter-group">
+            <label for="visitor-log-filter-start">From date</label>
+            <input type="date" id="visitor-log-filter-start" />
+          </div>
+          <div class="filter-group">
+            <label for="visitor-log-filter-end">To date</label>
+            <input type="date" id="visitor-log-filter-end" />
+          </div>
+          <div class="filter-group">
+            <label for="visitor-log-filter-country">Country</label>
+            <input
+              type="text"
+              id="visitor-log-filter-country"
+              placeholder="Contains…"
+              autocomplete="off"
+            />
+          </div>
+          <div class="filter-group">
+            <label for="visitor-log-filter-city">City</label>
+            <input
+              type="text"
+              id="visitor-log-filter-city"
+              placeholder="Contains…"
+              autocomplete="off"
+            />
+          </div>
+          <div class="filter-group">
+            <label for="visitor-log-filter-device">Device</label>
+            <select id="visitor-log-filter-device">
+              <option value="">All</option>
+              <option value="desktop">Desktop</option>
+              <option value="mobile">Mobile</option>
+              <option value="tablet">Tablet</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="visitor-log-filter-visitor-type">Visitor</label>
+            <select id="visitor-log-filter-visitor-type">
+              <option value="">All</option>
+              <option value="new">New</option>
+              <option value="returning">Returning</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="visitor-log-filter-utm">UTM source</label>
+            <input
+              type="text"
+              id="visitor-log-filter-utm"
+              placeholder="Contains…"
+              autocomplete="off"
+            />
+          </div>
+          <div class="filter-group">
+            <label for="visitor-log-filter-page">Page path</label>
+            <input
+              type="text"
+              id="visitor-log-filter-page"
+              placeholder="Contains…"
+              autocomplete="off"
+            />
+          </div>
+          <div class="filter-group">
+            <label for="visitor-log-filter-browser">Browser</label>
+            <input
+              type="text"
+              id="visitor-log-filter-browser"
+              placeholder="Contains…"
+              autocomplete="off"
+            />
+          </div>
+          <div class="filter-actions">
+            <button type="button" class="btn btn-secondary" id="visitor-log-apply">
+              Apply filters
+            </button>
+            <button type="button" class="btn btn-secondary" id="visitor-log-clear">
+              Clear
+            </button>
+          </div>
+        </div>
+        <div id="visitor-log-loading" class="loading">Loading visits…</div>
+        <div id="visitor-log-error" class="error" style="display: none"></div>
+        <div id="visitor-log-container"></div>
+        <div
+          id="visitor-log-pagination"
+          class="visitor-log-pagination"
+          style="display: none"
+        >
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="visitor-log-prev"
+          >
+            Previous
+          </button>
+          <span id="visitor-log-page-info"></span>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="visitor-log-next"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <!-- Per-visitor timeline -->
+      <div class="data-section" id="visitor-detail-section">
+        <h2>Visitor timeline (detailed)</h2>
+        <p
+          style="
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            margin: -0.5rem 0 1rem;
+          "
+        >
+          Groups all page views and tracked events for the same browser
+          <strong>fingerprint</strong> (returning visitors). Use
+          <strong>Timeline</strong> on a row above, or paste a visit
+          <code>_id</code> from the log / API.
+        </p>
+        <div
+          style="
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin-bottom: 1rem;
+          "
+        >
+          <div class="filter-group">
+            <label for="visitor-detail-id-input">Visitor / visit ID</label>
+            <input
+              type="text"
+              id="visitor-detail-id-input"
+              placeholder="MongoDB ObjectId"
+              autocomplete="off"
+              style="min-width: 280px"
+            />
+          </div>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="visitor-detail-load-btn"
+          >
+            Load timeline
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="visitor-detail-clear-btn"
+          >
+            Clear
+          </button>
+        </div>
+        <div
+          id="visitor-detail-loading"
+          class="loading"
+          style="display: none"
+        >
+          Loading visitor timeline…
+        </div>
+        <div id="visitor-detail-error" class="error" style="display: none"></div>
+        <div id="visitor-detail-content" style="display: none"></div>
       </div>
 
       <!-- Export Section -->
@@ -355,9 +662,14 @@
       </div>
     </div>
 
+    <script src="config.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      crossorigin=""
+    ></script>
+    <script src="admin-map.js"></script>
     <script>
-      const API_BASE_URL =
-        "https://job-hunter-service.vercel.app/api/portfolio";
+      const API_BASE_URL = window.__PORTFOLIO_ENV__.portfolioApiBase;
 
       // Theme Management
       class ThemeManager {
@@ -425,14 +737,49 @@
       class AdminDashboard {
         constructor() {
           this.token = getAuthToken();
+          this.visitorLogPage = 1;
+          this.visitorLogPages = 1;
           this.init();
         }
 
         async init() {
           await this.loadAnalytics();
+          await this.loadClickAnalytics();
           await this.loadVisitorLocations();
+          await this.loadVisitorLog();
           await this.loadContactMessages();
           await this.loadFreelanceInquiries();
+
+          document
+            .getElementById("visitor-log-prev")
+            .addEventListener("click", () => {
+              if (this.visitorLogPage > 1) {
+                this.visitorLogPage--;
+                this.loadVisitorLog();
+              }
+            });
+          document
+            .getElementById("visitor-log-next")
+            .addEventListener("click", () => {
+              if (this.visitorLogPage < this.visitorLogPages) {
+                this.visitorLogPage++;
+                this.loadVisitorLog();
+              }
+            });
+
+          document
+            .getElementById("visitor-log-apply")
+            .addEventListener("click", () => {
+              this.visitorLogPage = 1;
+              this.loadVisitorLog();
+            });
+          document
+            .getElementById("visitor-log-clear")
+            .addEventListener("click", () => {
+              this.clearVisitorLogFilters();
+              this.visitorLogPage = 1;
+              this.loadVisitorLog();
+            });
 
           // Filter listeners
           document
@@ -441,6 +788,44 @@
           document
             .getElementById("inquiry-filter")
             .addEventListener("change", () => this.loadFreelanceInquiries());
+
+          document
+            .getElementById("visitor-detail-load-btn")
+            .addEventListener("click", () => {
+              const id = document
+                .getElementById("visitor-detail-id-input")
+                .value.trim();
+              if (id) this.loadVisitorDetail(id);
+            });
+          document
+            .getElementById("visitor-detail-clear-btn")
+            .addEventListener("click", () => {
+              const inp = document.getElementById("visitor-detail-id-input");
+              const c = document.getElementById("visitor-detail-content");
+              const err = document.getElementById("visitor-detail-error");
+              const load = document.getElementById("visitor-detail-loading");
+              if (inp) inp.value = "";
+              if (c) {
+                c.style.display = "none";
+                c.innerHTML = "";
+              }
+              if (err) err.style.display = "none";
+              if (load) load.style.display = "none";
+            });
+          document
+            .getElementById("visitor-log-container")
+            .addEventListener("click", (e) => {
+              const btn = e.target.closest(".visitor-timeline-btn");
+              if (!btn) return;
+              const id = btn.getAttribute("data-visitor-id");
+              if (!id) return;
+              const inp = document.getElementById("visitor-detail-id-input");
+              if (inp) inp.value = id;
+              this.loadVisitorDetail(id);
+              const sec = document.getElementById("visitor-detail-section");
+              if (sec)
+                sec.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
         }
 
         async loadVisitorLocations() {
@@ -489,6 +874,11 @@
             (a, b) => b.count - a.count,
           );
 
+          const mapEl = document.getElementById("visitor-map-leaflet");
+          if (typeof renderPortfolioVisitorMap === "function") {
+            renderPortfolioVisitorMap(mapEl, sortedLocations);
+          }
+
           const html = `
                     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
                         ${sortedLocations
@@ -509,18 +899,18 @@
                                     <div style="font-size: 0.95rem; color: var(--text-secondary);">${this.escapeHtml(loc.country || "Unknown")}</div>
                                 </div>
                                 <div style="font-size: 0.8rem; color: var(--text-tertiary); font-family: monospace;">
-                                    ${loc.latitude.toFixed(4)}°, ${loc.longitude.toFixed(4)}°
+                                    ${this.formatCoord(loc.latitude)}, ${this.formatCoord(loc.longitude)}
                                 </div>
                                 ${
-                                  loc.visitors.length > 0
+                                  (loc.visitors || []).length > 0
                                     ? `
                                     <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
                                         <div style="font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 0.5rem;">Recent Sources</div>
                                         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                                             ${[
                                               ...new Set(
-                                                loc.visitors
-                                                  .filter((v) => v.utmSource)
+                                                (loc.visitors || [])
+                                                  .filter((v) => v && v.utmSource)
                                                   .map((v) => v.utmSource),
                                               ),
                                             ]
@@ -533,7 +923,7 @@
                                             `,
                                               )
                                               .join("")}
-                                            ${loc.visitors.filter((v) => !v.utmSource).length > 0 ? '<span style="font-size: 0.75rem; padding: 0.25rem 0.75rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-secondary);">Direct</span>' : ""}
+                                            ${(loc.visitors || []).filter((v) => v && !v.utmSource).length > 0 ? '<span style="font-size: 0.75rem; padding: 0.25rem 0.75rem; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-secondary);">Direct</span>' : ""}
                                         </div>
                                     </div>
                                 `
@@ -547,6 +937,218 @@
                 `;
 
           container.innerHTML = html;
+        }
+
+        clearVisitorLogFilters() {
+          const ids = [
+            "visitor-log-filter-start",
+            "visitor-log-filter-end",
+            "visitor-log-filter-country",
+            "visitor-log-filter-city",
+            "visitor-log-filter-device",
+            "visitor-log-filter-visitor-type",
+            "visitor-log-filter-utm",
+            "visitor-log-filter-page",
+            "visitor-log-filter-browser",
+          ];
+          ids.forEach((id) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (el.tagName === "SELECT") el.selectedIndex = 0;
+            else el.value = "";
+          });
+        }
+
+        visitorLogHasActiveFilters() {
+          const g = (id) => {
+            const el = document.getElementById(id);
+            return el && String(el.value || "").trim();
+          };
+          return !!(
+            g("visitor-log-filter-start") ||
+            g("visitor-log-filter-end") ||
+            g("visitor-log-filter-country") ||
+            g("visitor-log-filter-city") ||
+            g("visitor-log-filter-device") ||
+            g("visitor-log-filter-visitor-type") ||
+            g("visitor-log-filter-utm") ||
+            g("visitor-log-filter-page") ||
+            g("visitor-log-filter-browser")
+          );
+        }
+
+        appendVisitorLogFilters(url) {
+          const g = (id) => {
+            const el = document.getElementById(id);
+            if (!el) return "";
+            return String(el.value || "").trim();
+          };
+          const start = g("visitor-log-filter-start");
+          const end = g("visitor-log-filter-end");
+          if (start) url.searchParams.set("startDate", start);
+          if (end) url.searchParams.set("endDate", end);
+          if (g("visitor-log-filter-country"))
+            url.searchParams.set("country", g("visitor-log-filter-country"));
+          if (g("visitor-log-filter-city"))
+            url.searchParams.set("city", g("visitor-log-filter-city"));
+          if (g("visitor-log-filter-device"))
+            url.searchParams.set("deviceType", g("visitor-log-filter-device"));
+          const vt = g("visitor-log-filter-visitor-type");
+          if (vt) url.searchParams.set("visitorType", vt);
+          if (g("visitor-log-filter-utm"))
+            url.searchParams.set("utmSource", g("visitor-log-filter-utm"));
+          if (g("visitor-log-filter-page"))
+            url.searchParams.set("pageMatch", g("visitor-log-filter-page"));
+          if (g("visitor-log-filter-browser"))
+            url.searchParams.set("browser", g("visitor-log-filter-browser"));
+        }
+
+        async loadVisitorLog() {
+          const loading = document.getElementById("visitor-log-loading");
+          const errorEl = document.getElementById("visitor-log-error");
+          const container = document.getElementById("visitor-log-container");
+          const pagWrap = document.getElementById("visitor-log-pagination");
+          const prevBtn = document.getElementById("visitor-log-prev");
+          const nextBtn = document.getElementById("visitor-log-next");
+          const pageInfo = document.getElementById("visitor-log-page-info");
+
+          loading.style.display = "block";
+          errorEl.style.display = "none";
+          errorEl.textContent = "";
+          container.innerHTML = "";
+
+          try {
+            const url = new URL(`${API_BASE_URL}/admin/visitors`);
+            url.searchParams.set("page", String(this.visitorLogPage));
+            url.searchParams.set("limit", "10");
+            this.appendVisitorLogFilters(url);
+
+            const response = await fetch(url, {
+              headers: { Authorization: `Bearer ${this.token}` },
+            });
+
+            if (!response.ok) {
+              if (response.status === 401) {
+                logout();
+                return;
+              }
+              throw new Error("Failed to load visit log");
+            }
+
+            const result = await response.json();
+            loading.style.display = "none";
+
+            const { pagination } = result;
+            this.visitorLogPages = pagination.pages || 1;
+
+            if (!result.data || result.data.length === 0) {
+              const msg = this.visitorLogHasActiveFilters()
+                ? "No visits match the current filters."
+                : "No visits recorded yet.";
+              container.innerHTML = `<div class="empty-state">${msg}</div>`;
+              pagWrap.style.display = "none";
+              return;
+            }
+
+            pagWrap.style.display = "flex";
+            pageInfo.textContent = `Page ${pagination.page} of ${pagination.pages} · ${pagination.total.toLocaleString()} visit${pagination.total === 1 ? "" : "s"} total`;
+            prevBtn.disabled = pagination.page <= 1;
+            nextBtn.disabled = pagination.page >= pagination.pages;
+
+            const table = document.createElement("table");
+            table.className = "data-table";
+            table.innerHTML = `
+              <thead>
+                <tr>
+                  <th>Visit time</th>
+                  <th>Page</th>
+                  <th>Location</th>
+                  <th>Device</th>
+                  <th>Browser</th>
+                  <th>Source (UTM)</th>
+                  <th>Referrer</th>
+                  <th>Type</th>
+                  <th>IP</th>
+                  <th>Time (s)</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${result.data
+                  .map((v) => {
+                    const vid = v._id ? String(v._id) : "";
+                    const t = v.visitedAt
+                      ? new Date(v.visitedAt).toLocaleString(undefined, {
+                          dateStyle: "medium",
+                          timeStyle: "medium",
+                        })
+                      : "—";
+                    const loc = [v.city, v.region, v.country]
+                      .filter(Boolean)
+                      .join(", ");
+                    const src = this.formatVisitSource(v);
+                    const ref = v.referrer || "";
+                    const refShort = ref
+                      ? this.truncateText(ref, 40)
+                      : "—";
+                    const refTitle = ref ? this.escapeAttr(ref) : "";
+                    const timelineBtn = vid
+                      ? `<button type="button" class="btn btn-secondary visitor-timeline-btn" data-visitor-id="${this.escapeAttr(vid)}" style="padding:0.35rem 0.65rem;font-size:0.8rem">Timeline</button>`
+                      : "—";
+                    return `
+                  <tr>
+                    <td>${this.escapeHtml(t)}</td>
+                    <td>${this.escapeHtml(v.page || "—")}</td>
+                    <td>${this.escapeHtml(loc || "—")}</td>
+                    <td>${this.escapeHtml(v.deviceType || "—")}</td>
+                    <td>${this.escapeHtml((v.browser || "") + (v.os ? " · " + v.os : ""))}</td>
+                    <td>${this.escapeHtml(src)}</td>
+                    <td title="${refTitle}">${refShort}</td>
+                    <td>${v.isNewVisitor ? "New" : "Returning"}</td>
+                    <td style="font-family: monospace; font-size: 0.8rem;">${this.escapeHtml(v.ipAddress || "—")}</td>
+                    <td>${v.timeSpent != null && v.timeSpent > 0 ? Math.round(v.timeSpent) : "—"}</td>
+                    <td>${timelineBtn}</td>
+                  </tr>`;
+                  })
+                  .join("")}
+              </tbody>
+            `;
+
+            const wrap = document.createElement("div");
+            wrap.className = "table-scroll";
+            wrap.appendChild(table);
+            container.appendChild(wrap);
+          } catch (error) {
+            console.error("Error loading visitor log:", error);
+            loading.style.display = "none";
+            errorEl.textContent = `Error: ${error.message}`;
+            errorEl.style.display = "block";
+            pagWrap.style.display = "none";
+          }
+        }
+
+        formatVisitSource(v) {
+          const parts = [v.utmSource, v.utmMedium, v.utmCampaign].filter(
+            Boolean,
+          );
+          if (parts.length) return parts.join(" · ");
+          if (v.customSource) return v.customSource;
+          return "—";
+        }
+
+        truncateText(str, max) {
+          if (str == null || str === "") return "—";
+          const s = String(str);
+          if (s.length <= max) return this.escapeHtml(s);
+          return this.escapeHtml(s.slice(0, max)) + "…";
+        }
+
+        escapeAttr(text) {
+          if (text == null || text === "") return "";
+          return String(text)
+            .replace(/&/g, "&amp;")
+            .replace(/"/g, "&quot;")
+            .replace(/</g, "&lt;");
         }
 
         async loadAnalytics() {
@@ -585,6 +1187,288 @@
             );
           } catch (error) {
             console.error("Error loading analytics:", error);
+          }
+        }
+
+        async loadClickAnalytics() {
+          const loading = document.getElementById("clicks-loading");
+          const errorEl = document.getElementById("clicks-error");
+          const container = document.getElementById("clicks-container");
+          if (!loading || !container) return;
+
+          loading.style.display = "block";
+          if (errorEl) errorEl.style.display = "none";
+          container.style.display = "none";
+          container.innerHTML = "";
+
+          try {
+            const response = await fetch(
+              `${API_BASE_URL}/admin/click-analytics`,
+              {
+                headers: { Authorization: `Bearer ${this.token}` },
+              },
+            );
+
+            if (!response.ok) {
+              if (response.status === 401) {
+                logout();
+                return;
+              }
+              throw new Error("Failed to load click analytics");
+            }
+
+            const result = await response.json();
+            const d = result.data;
+            loading.style.display = "none";
+            container.style.display = "block";
+
+            const totalEl = document.getElementById("total-ui-clicks");
+            const sessEl = document.getElementById("click-sessions");
+            if (totalEl)
+              totalEl.textContent = (d.totalClicks ?? 0).toLocaleString();
+            if (sessEl)
+              sessEl.textContent = (d.uniqueSessions ?? 0).toLocaleString();
+
+            const byCatRows = (d.byCategory || [])
+              .map(
+                (row) => `
+              <tr>
+                <td>${this.escapeHtml(row._id || "—")}</td>
+                <td>${(row.count ?? 0).toLocaleString()}</td>
+              </tr>`,
+              )
+              .join("");
+
+            const byLabelRows = (d.byLabel || [])
+              .map((row) => {
+                const id = row._id || {};
+                const cat = id.category ?? "—";
+                const lab = id.label ?? "—";
+                return `
+              <tr>
+                <td>${this.escapeHtml(cat)}</td>
+                <td>${this.escapeHtml(lab)}</td>
+                <td>${(row.count ?? 0).toLocaleString()}</td>
+              </tr>`;
+              })
+              .join("");
+
+            const recentRows = (d.recent || [])
+              .map((ev) => {
+                const vid = ev.visitorId
+                  ? String(ev.visitorId).slice(-8)
+                  : "—";
+                const sid = ev.sessionId
+                  ? String(ev.sessionId).slice(0, 12) + "…"
+                  : "—";
+                const href = ev.href
+                  ? `<span title="${this.escapeAttr(ev.href)}">${this.escapeHtml(ev.href.length > 48 ? ev.href.slice(0, 48) + "…" : ev.href)}</span>`
+                  : "—";
+                return `
+              <tr>
+                <td>${ev.occurredAt ? new Date(ev.occurredAt).toLocaleString() : "—"}</td>
+                <td>${this.escapeHtml(ev.category || "—")}</td>
+                <td>${this.escapeHtml(ev.label || "—")}</td>
+                <td>${href}</td>
+                <td title="${this.escapeAttr(ev.sessionId || "")}">${this.escapeHtml(sid)}</td>
+                <td title="${this.escapeAttr(ev.visitorId ? String(ev.visitorId) : "")}">${this.escapeHtml(vid)}</td>
+              </tr>`;
+              })
+              .join("");
+
+            container.innerHTML = `
+              <div class="table-scroll">
+                <h3 style="font-size:1rem;margin:0 0 0.75rem;color:var(--text-secondary)">By category</h3>
+                <table class="data-table">
+                  <thead>
+                    <tr><th>Category</th><th>Clicks</th></tr>
+                  </thead>
+                  <tbody>
+                    ${byCatRows || '<tr><td colspan="2">No data yet</td></tr>'}
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-scroll" style="margin-top:1.5rem">
+                <h3 style="font-size:1rem;margin:0 0 0.75rem;color:var(--text-secondary)">By category &amp; label (top 40)</h3>
+                <table class="data-table">
+                  <thead>
+                    <tr><th>Category</th><th>Label</th><th>Clicks</th></tr>
+                  </thead>
+                  <tbody>
+                    ${byLabelRows || '<tr><td colspan="3">No data yet</td></tr>'}
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-scroll" style="margin-top:1.5rem">
+                <h3 style="font-size:1rem;margin:0 0 0.75rem;color:var(--text-secondary)">Recent events (newest 80)</h3>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Category</th>
+                      <th>Label</th>
+                      <th>Link</th>
+                      <th>Session</th>
+                      <th>Visitor (id suffix)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${recentRows || '<tr><td colspan="6">No data yet</td></tr>'}
+                  </tbody>
+                </table>
+              </div>
+            `;
+          } catch (error) {
+            console.error("Error loading click analytics:", error);
+            loading.style.display = "none";
+            if (errorEl) {
+              errorEl.textContent = `Error: ${error.message}`;
+              errorEl.style.display = "block";
+            }
+          }
+        }
+
+        async loadVisitorDetail(visitorId) {
+          const loading = document.getElementById("visitor-detail-loading");
+          const errEl = document.getElementById("visitor-detail-error");
+          const content = document.getElementById("visitor-detail-content");
+          if (!loading || !content) return;
+
+          loading.style.display = "block";
+          if (errEl) errEl.style.display = "none";
+          content.style.display = "none";
+          content.innerHTML = "";
+
+          try {
+            const url = new URL(`${API_BASE_URL}/admin/visitor-detail`);
+            url.searchParams.set("visitorId", visitorId.trim());
+
+            const response = await fetch(url, {
+              headers: { Authorization: `Bearer ${this.token}` },
+            });
+
+            if (!response.ok) {
+              if (response.status === 401) {
+                logout();
+                return;
+              }
+              const j = await response.json().catch(() => ({}));
+              throw new Error(j.message || "Failed to load visitor detail");
+            }
+
+            const result = await response.json();
+            const d = result.data;
+            loading.style.display = "none";
+            content.style.display = "block";
+
+            const s = d.summary || {};
+            const fp = s.fingerprint;
+            const countries = (s.countries || []).join(", ") || "—";
+            const first = s.firstSeen
+              ? new Date(s.firstSeen).toLocaleString()
+              : "—";
+            const last = s.lastSeen
+              ? new Date(s.lastSeen).toLocaleString()
+              : "—";
+
+            const visitsTableRows = (d.visits || [])
+              .map((v) => {
+                const t = v.visitedAt
+                  ? new Date(v.visitedAt).toLocaleString()
+                  : "—";
+                return `<tr>
+                  <td>${this.escapeHtml(t)}</td>
+                  <td>${this.escapeHtml(v.page || "—")}</td>
+                  <td>${this.escapeHtml(v.sessionId ? String(v.sessionId).slice(0, 14) + "…" : "—")}</td>
+                  <td>${this.escapeHtml([v.city, v.country].filter(Boolean).join(", ") || "—")}</td>
+                  <td style="font-family:monospace;font-size:0.75rem">${this.escapeHtml(v._id ? String(v._id) : "—")}</td>
+                </tr>`;
+              })
+              .join("");
+
+            const timelineRows = (d.timeline || [])
+              .map((row) => {
+                const t = row.at
+                  ? new Date(row.at).toLocaleString()
+                  : "—";
+                if (row.kind === "page_view") {
+                  return `<tr>
+                    <td>${this.escapeHtml(t)}</td>
+                    <td><span class="badge badge-new">Page view</span></td>
+                    <td>${this.escapeHtml(row.page || "—")}</td>
+                    <td>${this.escapeHtml(row.sessionId ? String(row.sessionId).slice(0, 12) + "…" : "—")}</td>
+                    <td>${this.escapeHtml([row.city, row.country].filter(Boolean).join(", ") || "—")}</td>
+                    <td>—</td>
+                  </tr>`;
+                }
+                const ev = row.event || "—";
+                const cat = row.category || "—";
+                const lab = row.label || "—";
+                const href = row.href
+                  ? this.escapeHtml(
+                      row.href.length > 40 ? row.href.slice(0, 40) + "…" : row.href,
+                    )
+                  : "—";
+                return `<tr>
+                  <td>${this.escapeHtml(t)}</td>
+                    <td><span class="badge badge-read">${this.escapeHtml(ev)}</span></td>
+                    <td>${this.escapeHtml(cat)} · ${this.escapeHtml(lab)}</td>
+                    <td>${this.escapeHtml(row.sessionId ? String(row.sessionId).slice(0, 12) + "…" : "—")}</td>
+                    <td>—</td>
+                    <td title="${this.escapeAttr(row.href || "")}">${href}</td>
+                  </tr>`;
+              })
+              .join("");
+
+            content.innerHTML = `
+              <div style="padding:1.25rem;border:1px solid var(--border-color);border-radius:8px;background:var(--bg-secondary);margin-bottom:1.5rem">
+                <p style="margin:0 0 0.5rem;font-size:0.9rem"><strong>Fingerprint:</strong> ${fp ? `<code style="font-size:0.8rem">${this.escapeHtml(fp)}</code>` : "<em>single visit (no fingerprint)</em>"}</p>
+                <p style="margin:0 0 0.35rem;font-size:0.875rem;color:var(--text-secondary)">First seen: ${this.escapeHtml(first)} · Last seen: ${this.escapeHtml(last)}</p>
+                <p style="margin:0;font-size:0.875rem;color:var(--text-secondary)">${(s.totalVisits ?? 0).toLocaleString()} page views · ${(s.totalEvents ?? 0).toLocaleString()} events · Countries: ${this.escapeHtml(countries)}</p>
+              </div>
+              <h3 style="font-size:1rem;margin:0 0 0.75rem;color:var(--text-secondary)">Merged timeline (newest first)</h3>
+              <div class="table-scroll">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Type</th>
+                      <th>Detail</th>
+                      <th>Session</th>
+                      <th>Location</th>
+                      <th>Link / extra</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${timelineRows || '<tr><td colspan="6">No activity</td></tr>'}
+                  </tbody>
+                </table>
+              </div>
+              <h3 style="font-size:1rem;margin:1.5rem 0 0.75rem;color:var(--text-secondary)">All page views (same fingerprint)</h3>
+              <div class="table-scroll">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Page</th>
+                      <th>Session</th>
+                      <th>Location</th>
+                      <th>Visit ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${visitsTableRows || '<tr><td colspan="5">No visits</td></tr>'}
+                  </tbody>
+                </table>
+              </div>
+            `;
+          } catch (error) {
+            console.error("Error loading visitor detail:", error);
+            loading.style.display = "none";
+            if (errEl) {
+              errEl.textContent = `Error: ${error.message}`;
+              errEl.style.display = "block";
+            }
           }
         }
 
@@ -738,8 +1622,14 @@
 
         escapeHtml(text) {
           const div = document.createElement("div");
-          div.textContent = text;
+          div.textContent = text == null ? "" : text;
           return div.innerHTML;
+        }
+
+        formatCoord(n) {
+          const x = Number(n);
+          if (!isFinite(x)) return "—";
+          return x.toFixed(4) + "°";
         }
       }
 

@@ -2,12 +2,17 @@
 // Minimalist, performant, no external dependencies
 
 /* ========================================
-   CONFIGURATION
+   CONFIGURATION (base URL from config.js → __PORTFOLIO_ENV__)
    ======================================== */
 const CONFIG = {
-  API_BASE_URL: "https://job-hunter-service.vercel.app/api/portfolio",
-  //   API_BASE_URL: "http://localhost:5000/api/portfolio",
-  RESUME_URL: "/api/portfolio/resume/download",
+  get API_BASE_URL() {
+    var env = window.__PORTFOLIO_ENV__;
+    if (env && env.portfolioApiBase) return env.portfolioApiBase;
+    return "http://localhost:5000/api/portfolio";
+  },
+  get RESUME_URL() {
+    return `${this.API_BASE_URL}/resume/download`;
+  },
 };
 
 /* ========================================
@@ -166,6 +171,7 @@ class Analytics {
     this.trackPageView();
     this.trackTimeOnPage();
     this.trackScrollDepth();
+    this.initUiClickTracking();
   }
 
   // Generate unique session ID
@@ -343,6 +349,7 @@ class Analytics {
 
   async trackEvent(eventName, eventData = {}) {
     try {
+      const visitorId = sessionStorage.getItem("portfolio_visitor_id");
       await fetch(`${CONFIG.API_BASE_URL}/analytics/event`, {
         method: "POST",
         headers: {
@@ -350,6 +357,7 @@ class Analytics {
         },
         body: JSON.stringify({
           event: eventName,
+          visitorId: visitorId || undefined,
           data: {
             ...eventData,
             sessionId: this.sessionId,
@@ -361,6 +369,102 @@ class Analytics {
     } catch (error) {
       console.error("Failed to track event:", error);
     }
+  }
+
+  /**
+   * Nav, footer, project links, CTAs — stored as event `ui_click` with category/label.
+   */
+  async trackUiClick({ category, label, href }) {
+    try {
+      const visitorId = sessionStorage.getItem("portfolio_visitor_id");
+      await fetch(`${CONFIG.API_BASE_URL}/analytics/event`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          event: "ui_click",
+          visitorId: visitorId || undefined,
+          category,
+          label,
+          href: href || "",
+          data: {
+            sessionId: this.sessionId,
+            fingerprint: this.fingerprint,
+          },
+          timestamp: new Date().toISOString(),
+        }),
+        keepalive: true,
+      });
+    } catch (error) {
+      console.error("Failed to track UI click:", error);
+    }
+  }
+
+  initUiClickTracking() {
+    document.addEventListener(
+      "click",
+      (e) => {
+        const el = e.target.closest("a, button");
+        if (!el) return;
+        if (el.closest("[data-no-track]")) return;
+        if (el.id === "download-resume") return;
+
+        let category = "other";
+        let label = "";
+        const href = el.getAttribute("href") || "";
+
+        if (el.classList.contains("nav-link")) {
+          category = "nav";
+          label = (el.textContent || "").trim() || href;
+        } else if (el.classList.contains("nav-logo")) {
+          category = "nav";
+          label = "Logo (home)";
+        } else if (el.classList.contains("project-link-btn")) {
+          category = "project_link";
+          const span = el.querySelector("span");
+          label = span
+            ? span.textContent.trim()
+            : (el.textContent || "").trim();
+        } else if (el.closest(".footer-links")) {
+          category = "footer";
+          label = (el.textContent || "").trim() || href;
+        } else if (el.id === "theme-toggle") {
+          category = "ui";
+          label = "theme_toggle";
+        } else if (el.classList.contains("nav-toggle")) {
+          category = "ui";
+          label = "mobile_menu_toggle";
+        } else if (el.closest(".hero-cta")) {
+          category = "cta";
+          label =
+            (el.textContent || "").trim().slice(0, 120) || "hero_cta";
+        } else if (
+          el.tagName === "BUTTON" &&
+          el.getAttribute("type") === "submit" &&
+          el.closest("form")
+        ) {
+          const fid = el.closest("form")?.getAttribute("id") || "form";
+          category = "form";
+          label = `${fid}_submit`;
+        } else if (el.tagName === "A") {
+          category = "link";
+          label =
+            (el.textContent || "").trim().slice(0, 120) || href || "link";
+        } else if (el.tagName === "BUTTON") {
+          category = "button";
+          label =
+            (el.textContent || "").trim().slice(0, 120) ||
+            el.getAttribute("aria-label") ||
+            "button";
+        }
+
+        if (!label) label = href || "unknown";
+
+        this.trackUiClick({ category, label, href });
+      },
+      true,
+    );
   }
 
   static async trackEvent(eventName, eventData = {}) {
@@ -399,9 +503,14 @@ class ResumeDownloader {
 
   async downloadResume() {
     try {
-      Analytics.trackEvent("resume_download", {
-        source: "hero_section",
-      });
+      const pa = window.portfolioAnalytics;
+      if (pa && typeof pa.trackEvent === "function") {
+        await pa.trackEvent("resume_download", { source: "hero_section" });
+      } else {
+        await Analytics.trackEvent("resume_download", {
+          source: "hero_section",
+        });
+      }
 
       const response = await fetch(`${CONFIG.API_BASE_URL}/resume/download`, {
         method: "POST",
@@ -619,13 +728,11 @@ document.addEventListener("DOMContentLoaded", () => {
   new Navigation();
   new MetricsCounter();
   const analytics = new Analytics();
+  window.portfolioAnalytics = analytics;
   new ResumeDownloader();
   new ContactForm();
   new FreelanceForm();
   new ScrollAnimations();
-
-  // Make analytics instance globally available
-  window.portfolioAnalytics = analytics;
 
   console.log("Portfolio website initialized");
   console.log("Session ID:", analytics.sessionId);
