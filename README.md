@@ -2,11 +2,11 @@
 
 **Senior Software Engineer** · Pune, India
 
-I’m a full-stack engineer: mostly **React** and **TypeScript** on the UI, **Go** and **Node** behind it, with a lot of time in security and ops-adjacent products (SIEM-style tooling for MSPs). Before my current role I worked on **Shotclasses** at LTIMindtree—high-traffic edtech, WebSockets, PostgreSQL, the usual.
+I’m a full-stack engineer: mostly **React** and **TypeScript** on the UI, **Go** and **Node** behind it, with a lot of time in security and ops-adjacent products (SIEM-style tooling for MSPs). Before my current role I worked on **Shotclasses** at LTIMindtree high-traffic edtech, WebSockets, PostgreSQL, the usual.
 
-On my own time I run **HS Analytics**: a Go stack (lots of small services, **gRPC**, **Kafka**) for Indian markets—screening, strategies, some ML-ish signals, broker hooks via **5paisa**, and a **React** front end I keep evolving.
+On my own time I run **HS Analytics**: a Go stack (lots of small services, **gRPC**, **Kafka**) for Indian markets screening, strategies, some ML-ish signals, broker hooks via **5paisa**, and a **React** front end I keep evolving.
 
-Day to day I lean on **Go**, **React**, **Node**, and **Python** depending on the problem—not married to one stack.
+Day to day I lean on **Go**, **React**, **Node**, and **Python** depending on the problem not married to one stack.
 
 ---
 
@@ -150,8 +150,6 @@ Languages, frameworks, and infra I’ve actually shipped with.
   <a href="mailto:harshilsheth181888@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
   &nbsp;
   <a href="https://linkedin.com/in/harshilsheth1888"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
-  &nbsp;
-  <a href="https://github.com/Harshil-Sheth"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
   &nbsp;
   <a href="https://leetcode.com/u/ShethHarshil/"><img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode" /></a>
 </p>
