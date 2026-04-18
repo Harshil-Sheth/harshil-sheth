@@ -67,6 +67,27 @@ Day to day I lean on **Go**, **React**, **Node**, and **Python** depending on th
 </tr>
 <tr><td colspan="2"></td></tr>
 <tr>
+<td valign="top"><strong>Nov 2020 — Aug 2021</strong><br><sub>Project Trainee</sub></td>
+<td valign="top">
+  <strong>MERN Stack Developer</strong> · Gateway Group of Companies — <em>WeCare-HomeCare</em> &amp; full-stack practice<br><br>
+  <strong>MERN/PERN</strong>, <strong>.NET</strong>, <strong>Node.js</strong>, <strong>PostgreSQL</strong>, REST APIs.<br><br>
+  <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/.NET-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt=".NET" />
+</td>
+</tr>
+<tr><td colspan="2"></td></tr>
+<tr>
+<td valign="top"><strong>Dec 2019 — Jan 2020</strong><br><sub>internship</sub></td>
+<td valign="top">
+  <strong>Cloud Engineer</strong> · vRajan Infotech<br><br>
+  Web app on <strong>AWS</strong>: deployment, hosting security, performance tuning.<br><br>
+  <img src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonwebservices&logoColor=white" alt="AWS" />
+</td>
+</tr>
+<tr><td colspan="2"></td></tr>
+<tr>
 <td valign="top"><strong>2022 — Present</strong><br><sub>Side project</sub></td>
 <td valign="top">
   <strong>HS Analytics</strong> — independent · Indian markets<br><br>

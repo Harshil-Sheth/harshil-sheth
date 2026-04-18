@@ -114,7 +114,7 @@ class Navigation {
    ======================================== */
 class MetricsCounter {
   constructor() {
-    this.metrics = document.querySelectorAll(".metric-value");
+    this.metrics = document.querySelectorAll(".metrics .metric-value");
     this.animated = false;
     this.init();
   }
@@ -141,7 +141,19 @@ class MetricsCounter {
 
   animateCounters() {
     this.metrics.forEach((metric) => {
-      const target = parseInt(metric.getAttribute("data-target"));
+      if (metric.hasAttribute("data-tenure")) {
+        const env = window.__PORTFOLIO_ENV__;
+        const target =
+          env && typeof env.getCareerYearsRounded === "function"
+            ? env.getCareerYearsRounded(1)
+            : 0;
+        this.animateTenureYears(metric, target, 2000);
+        return;
+      }
+
+      const target = parseInt(metric.getAttribute("data-target"), 10);
+      if (Number.isNaN(target)) return;
+
       const duration = 2000;
       const increment = target / (duration / 16);
       let current = 0;
@@ -158,6 +170,24 @@ class MetricsCounter {
 
       updateCounter();
     });
+  }
+
+  /** Whole years from careerStartIso, same style as other metrics (e.g. 5+) */
+  animateTenureYears(metric, target, duration) {
+    const increment = target / (duration / 16);
+    let current = 0;
+
+    const updateCounter = () => {
+      current += increment;
+      if (current < target) {
+        metric.textContent = Math.floor(current).toLocaleString() + "+";
+        requestAnimationFrame(updateCounter);
+      } else {
+        metric.textContent = target.toLocaleString() + "+";
+      }
+    };
+
+    updateCounter();
   }
 }
 
@@ -722,7 +752,24 @@ class ScrollAnimations {
 /* ========================================
    INITIALIZATION
    ======================================== */
+function initFooterYear() {
+  const el = document.getElementById("portfolio-footer-year");
+  if (el) {
+    el.textContent = String(new Date().getFullYear());
+  }
+}
+
+function initAboutCareerYears() {
+  const env = window.__PORTFOLIO_ENV__;
+  const el = document.getElementById("about-career-years");
+  if (el && env && typeof env.getCareerYearsWhole === "function") {
+    el.textContent = String(env.getCareerYearsWhole());
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  initFooterYear();
+  initAboutCareerYears();
   // Initialize all components
   new ThemeManager();
   new Navigation();

@@ -36,6 +36,12 @@
 
   var origin = resolveBackendOrigin();
 
+  /**
+   * Start of professional / production timeline (first role: Nov 2020).
+   * Drives the “Years in production” metric and any other tenure copy — change once here.
+   */
+  var CAREER_START_ISO = "2020-11-01";
+
   window.__PORTFOLIO_ENV__ = {
     devOrigin: DEV_ORIGIN,
     prodOrigin: PROD_ORIGIN,
@@ -45,5 +51,30 @@
     isDevHostname:
       window.location.hostname === "localhost" ||
       window.location.hostname === "127.0.0.1",
+
+    /** ISO date (YYYY-MM-DD) — professional experience counter starts here */
+    careerStartIso: CAREER_START_ISO,
+
+    /** Full years as a float (from careerStartIso to now). */
+    getCareerYears: function () {
+      var iso = this.careerStartIso || CAREER_START_ISO;
+      var start = new Date(iso + "T12:00:00");
+      var now = new Date();
+      if (now.getTime() < start.getTime()) return 0;
+      return (now - start) / (365.25 * 24 * 60 * 60 * 1000);
+    },
+
+    /** Rounded tenure to arbitrary decimals (e.g. 5.4) — optional for non-UI use */
+    getCareerYearsRounded: function (decimals) {
+      var d = decimals === undefined ? 1 : decimals;
+      var y = this.getCareerYears();
+      var pow = Math.pow(10, d);
+      return Math.round(y * pow) / pow;
+    },
+
+    /** Whole years for UI (metric + About copy), e.g. 5 */
+    getCareerYearsWhole: function () {
+      return Math.max(0, Math.round(this.getCareerYears()));
+    },
   };
 })();

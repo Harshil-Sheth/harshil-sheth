@@ -180,8 +180,10 @@
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
           <p class="about-text">
-            Senior Software Engineer with 4.5+ years shipping production systems.
-            I work across the stack—<strong>React</strong>, <strong>Go</strong>,
+            Senior Software Engineer with
+            <span id="about-career-years">5</span>+ years shipping production
+            systems. I work across the stack—<strong>React</strong>,
+            <strong>Go</strong>,
             Node, FastAPI, and LLM-backed features—with a focus on large-scale
             security products for MSPs and, before that, high-traffic edtech
             (<strong>Shotclasses</strong> at <strong>LTIMindtree</strong>:
@@ -200,16 +202,16 @@
 
           <div class="metrics">
             <div class="metric">
-              <div class="metric-value" data-target="67000">0</div>
-              <div class="metric-label">Users Served</div>
+              <div class="metric-value" data-tenure>0</div>
+              <div class="metric-label">Years in production</div>
             </div>
             <div class="metric">
               <div class="metric-value" data-target="8">0</div>
               <div class="metric-label">Projects Delivered</div>
             </div>
             <div class="metric">
-              <div class="metric-value" data-target="6">0</div>
-              <div class="metric-label">Core services · HS Analytics</div>
+              <div class="metric-value" data-target="10">0</div>
+              <div class="metric-label">Core technologies</div>
             </div>
             <!-- <div class="metric">
                         <div class="metric-value" data-target="7000">0</div>
@@ -301,6 +303,76 @@
                 <span class="tech-tag">PostgreSQL</span>
                 <span class="tech-tag">WebSocket</span>
                 <span class="tech-tag">Redis</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gateway Group of Companies -->
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="timeline-title">Project Trainee</h3>
+                <span class="timeline-period">Nov 2020 - Aug 2021</span>
+              </div>
+              <h4 class="timeline-company">Gateway Group of Companies</h4>
+              <p class="timeline-location">Ahmedabad, Gujarat</p>
+              <ul class="timeline-achievements">
+                <li>
+                  Full-stack intern across MERN/PERN, .NET, REST APIs, and
+                  multiple databases
+                </li>
+                <li>
+                  Shipped WeCare-HomeCare, a full-stack web app for home
+                  cleaning services
+                </li>
+                <li>
+                  Rebuilt the UI for stronger UX, responsive layouts, and a
+                  hardened backend
+                </li>
+                <li>
+                  Tuned Node.js REST services and PostgreSQL for faster responses
+                  and cleaner API design
+                </li>
+              </ul>
+              <div class="timeline-tech">
+                <span class="tech-tag">MERN</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">.NET</span>
+                <span class="tech-tag">REST</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- vRajan Infotech -->
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="timeline-title">Cloud Engineer</h3>
+                <span class="timeline-period">Dec 2019 - Jan 2020</span>
+              </div>
+              <h4 class="timeline-company">vRajan Infotech</h4>
+              <p class="timeline-location">Ahmedabad, Gujarat</p>
+              <ul class="timeline-achievements">
+                <li>
+                  Delivered end-to-end development and deployment of a
+                  high-performance web application on AWS
+                </li>
+                <li>
+                  Strengthened hosting security and web asset delivery with
+                  operational best practices and performance tuning
+                </li>
+                <li>
+                  Improved efficiency, latency, and flexibility using AWS
+                  services and thoughtful resource configuration
+                </li>
+              </ul>
+              <div class="timeline-tech">
+                <span class="tech-tag">AWS</span>
+                <span class="tech-tag">Cloud deployment</span>
+                <span class="tech-tag">Web security</span>
               </div>
             </div>
           </div>
@@ -827,7 +899,10 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
-          <p>&copy; 2026 Harshil Sheth. All rights reserved.</p>
+          <p>
+            &copy; <span id="portfolio-footer-year"></span> Harshil Sheth. All
+            rights reserved.
+          </p>
           <div class="footer-links">
             <a
               href="https://github.com/Harshil-Sheth"
