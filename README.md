@@ -2,11 +2,13 @@
 
 **Senior Software Engineer** · Pune, India
 
-I’m a full-stack engineer: mostly **React** and **TypeScript** on the UI, **Go** and **Node** behind it, with a lot of time in security and ops-adjacent products (SIEM-style tooling for MSPs). Before my current role I worked on **Shotclasses** at LTIMindtree high-traffic edtech, WebSockets, PostgreSQL, the usual.
+I’m a full-stack engineer: mostly **React** and **TypeScript** on the UI, **Go** and **Node** behind it, with a lot of time in security and ops-adjacent products (SIEM-style tooling for MSPs). Before my current role I worked on **Shotclasses** at LTIMindtree—high-traffic edtech, WebSockets, PostgreSQL, the usual.
 
-On my own time I run **HS Analytics**: a Go stack (lots of small services, **gRPC**, **Kafka**) for Indian markets screening, strategies, some ML-ish signals, broker hooks via **5paisa**, and a **React** front end I keep evolving.
+On my own time I run **HS Analytics**: a **6-service** Go stack (**gRPC**, **Kafka**) for Indian markets—screening, strategies, ML-ish signals, **5paisa** hooks, and a **React** UI I actually use for my own research and productivity.
 
-Day to day I lean on **Go**, **React**, **Node**, and **Python** depending on the problem not married to one stack.
+I also build and use **Job Hunter AI** (job tracking, resume matching, per-company job alerts with email, MV3 extension, **MongoDB** API) and a **DSA / LeetCode** prep app—so search, applications, and interview practice stay in one personal toolchain.
+
+Day to day I lean on **Go**, **React**, **Node**, and **Python** depending on the problem—not married to one stack.
 
 ---
 
@@ -68,7 +70,7 @@ Day to day I lean on **Go**, **React**, **Node**, and **Python** depending on th
 <td valign="top"><strong>2022 — Present</strong><br><sub>Side project</sub></td>
 <td valign="top">
   <strong>HS Analytics</strong> — independent · Indian markets<br><br>
-  Multiple <strong>Go</strong> services, <strong>gRPC</strong>, <strong>Kafka</strong>, <strong>React</strong> UI, <strong>5paisa</strong> broker integration — screening, strategies, signals.<br><br>
+  <strong>Six</strong> <strong>Go</strong> services, <strong>gRPC</strong>, <strong>Kafka</strong>, <strong>React</strong> UI, <strong>5paisa</strong> broker integration — screening, strategies, signals; built for my own trading workflow first.<br><br>
   <img src="https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white" alt="Go" />
   <img src="https://img.shields.io/badge/gRPC-244c5a?style=flat-square&logo=grpc&logoColor=white" alt="gRPC" />
   <img src="https://img.shields.io/badge/Kafka-231F20?style=flat-square&logo=apachekafka&logoColor=white" alt="Kafka" />
@@ -150,6 +152,8 @@ Languages, frameworks, and infra I’ve actually shipped with.
   <a href="mailto:harshilsheth181888@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
   &nbsp;
   <a href="https://linkedin.com/in/harshilsheth1888"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+  &nbsp;
+  <a href="https://github.com/Harshil-Sheth"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
   &nbsp;
   <a href="https://leetcode.com/u/ShethHarshil/"><img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode" /></a>
 </p>
