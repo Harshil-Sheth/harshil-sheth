@@ -69,7 +69,7 @@ Day to day I lean on **Go**, **React**, **Node**, and **Python** depending on th
 <tr>
 <td valign="top"><strong>Nov 2020 — Aug 2021</strong><br><sub>Project Trainee</sub></td>
 <td valign="top">
-  <strong>MERN Stack Developer</strong> · Gateway Group of Companies — <em>WeCare-HomeCare</em> &amp; full-stack practice<br><br>
+  <strong>Project Trainee — Full Stack Developer</strong> · Gateway Group of Companies — <em>WeCare-HomeCare</em> (on-demand home cleaning)<br><br>
   <strong>MERN/PERN</strong>, <strong>.NET</strong>, <strong>Node.js</strong>, <strong>PostgreSQL</strong>, REST APIs.<br><br>
   <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
   <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" />
