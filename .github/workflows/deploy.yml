@@ -5,12 +5,17 @@ on:
     branches:
       - master
 
+permissions:
+  contents: write # Grants explicit write clearance to the runner execution block
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Private Repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false # Stops GitHub from forcing the restricted bot token
 
       - name: Push to Public Repo
         uses: cpina/github-action-push-to-another-repository@master
