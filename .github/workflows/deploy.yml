@@ -1,0 +1,24 @@
+name: Deploy Static Files to Public Repo
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Private Repo
+        uses: actions/checkout@v4
+
+      - name: Push to Public Repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: '.'
+          destination-github-username: 'Harshil-Sheth'
+          destination-repository-name: 'harshil-sheth-portfolio'
+          user-email: 'rajshah181888@gmail.com'
+          target-branch: 'master'
